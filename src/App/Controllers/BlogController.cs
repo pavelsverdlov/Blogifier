@@ -8,12 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace App.Controllers
-{
+namespace App.Controllers {
     [ApiExplorerSettings(IgnoreApi = true)]
     public class BlogController : Controller
     {
@@ -31,9 +31,12 @@ namespace App.Controllers
             _viewEngine = viewEngine;
         }
 
-        //[Route("blog")]
+        [HttpGet("{culture}")]
+
         public async Task<IActionResult> Index(int page = 1, string term = "")
         {
+            var name = CultureInfo.CurrentCulture.Name;
+
             var blog = await _db.CustomFields.GetBlogSettings();
             var pager = new Pager(page, blog.ItemsPerPage);
             IEnumerable<PostItem> posts;
@@ -69,7 +72,7 @@ namespace App.Controllers
             return View(string.Format(_listView, blog.Theme), model);
         }
 
-        [HttpGet("posts/{slug}")]
+        [HttpGet("{culture}/posts/{year}/{month}/{day}/{slug}")]
         public async Task<IActionResult> Single(string slug)
         {
             try
@@ -80,7 +83,7 @@ namespace App.Controllers
                 model.Blog = await _db.CustomFields.GetBlogSettings();
 
                 model.Blog.Cover = string.IsNullOrEmpty(model.Post.Cover) ? 
-                    $"{Url.Content("~/")}{model.Blog.Cover}" : 
+                    $"{Url.Content("~/")}{model.Blog.Cover}": 
                     $"{Url.Content("~/")}{model.Post.Cover}";
                 model.Blog.Title = model.Post.Title;
 
@@ -93,7 +96,7 @@ namespace App.Controllers
             
         }
 
-        [HttpGet("authors/{name}")]
+        [HttpGet("{culture}/authors/{name}")]
         public async Task<IActionResult> Authors(string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
@@ -119,7 +122,7 @@ namespace App.Controllers
             return View(string.Format(_listView, model.Blog.Theme), model);
         }
 
-        [HttpGet("categories/{name}")]
+        [HttpGet("{culture}/categories/{name}")]
         public async Task<IActionResult> Categories(string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
@@ -145,7 +148,7 @@ namespace App.Controllers
             return View(string.Format(_listView, model.Blog.Theme), model);
         }
 
-        [HttpGet("feed/{type}")]
+        [HttpGet("{culture}/feed/{type}")]
         public async Task Rss(string type)
         {
             Response.ContentType = "application/xml";
@@ -169,7 +172,7 @@ namespace App.Controllers
             }
         }
 
-        [HttpGet("error/{code:int}")]
+        [HttpGet("{culture}/error/{code:int}")]
         public async Task<IActionResult> Error(int code)
         {
             var model = new PostModel();
@@ -190,14 +193,14 @@ namespace App.Controllers
             }
         }
 
-        [HttpGet("admin")]
+        [HttpGet("{culture}/admin")]
         [Authorize]
         public IActionResult Admin()
         {
             return Redirect("~/admin/posts");
         }
 
-        [HttpPost("account/logout")]
+        [HttpPost("{culture}/account/logout")]
         public async Task<IActionResult> Logout()
         {
             await _sm.SignOutAsync();

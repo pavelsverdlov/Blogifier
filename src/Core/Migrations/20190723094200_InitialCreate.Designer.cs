@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20180917014904_HtmlWidgets")]
-    partial class HtmlWidgets
+    [Migration("20190723094200_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("Core.Data.AppUser", b =>
                 {
@@ -73,9 +73,6 @@ namespace Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppUserId")
-                        .HasMaxLength(160);
-
                     b.Property<string>("AppUserName")
                         .HasMaxLength(160);
 
@@ -121,6 +118,10 @@ namespace Core.Migrations
 
                     b.Property<bool>("IsFeatured");
 
+                    b.Property<string>("Lang")
+                        .IsRequired()
+                        .HasMaxLength(2);
+
                     b.Property<int>("PostViews");
 
                     b.Property<DateTime>("Published");
@@ -140,6 +141,22 @@ namespace Core.Migrations
                     b.ToTable("BlogPosts");
                 });
 
+            modelBuilder.Entity("Core.Data.CustomField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AuthorId");
+
+                    b.Property<string>("Content");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CustomFields");
+                });
+
             modelBuilder.Entity("Core.Data.HtmlWidget", b =>
                 {
                     b.Property<int>("Id")
@@ -155,7 +172,19 @@ namespace Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("HtmlWidtes");
+                    b.ToTable("HtmlWidgets");
+                });
+
+            modelBuilder.Entity("Core.Data.Newsletter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Email");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Newsletters");
                 });
 
             modelBuilder.Entity("Core.Data.Notification", b =>

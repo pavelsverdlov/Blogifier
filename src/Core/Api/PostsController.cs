@@ -24,7 +24,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Search blog posts by term (CORS enabled)
+        /// Search blog posts by term
         /// </summary>
         /// <param name="term">Search term</param>
         /// <param name="author">Author</param>
@@ -68,7 +68,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get list of blog posts (CORS enabled)
+        /// Get list of blog posts
         /// </summary>
         /// <param name="author">Post author</param>
         /// <param name="category">Post category</param>
@@ -112,7 +112,7 @@ namespace Core.Api
         }
 
         /// <summary>
-        /// Get single post by ID (CORS enabled)
+        /// Get single post by ID
         /// </summary>
         /// <param name="id">Post ID</param>
         /// <param name="format">Otput format: html or markdown; default = html;</param>
@@ -139,7 +139,6 @@ namespace Core.Api
             }               
         }
 
-
         /// <summary>
         /// Get single post by Slug (CORS enabled)
         /// </summary>
@@ -148,32 +147,26 @@ namespace Core.Api
         /// <returns>Post model</returns>
         [HttpGet("byslug/{slug}")]
         [EnableCors("AllowOrigin")]
-        public async Task<PostModel> GetBySlug(string slug, [FromQuery]string format = "html")
-        {
-            if (!string.IsNullOrEmpty(slug))
-            {
+        public async Task<PostModel> GetBySlug(string slug, [FromQuery]string format = "html") {
+            if (!string.IsNullOrEmpty(slug)) {
                 var model = await _data.BlogPosts.GetModel(slug);
                 model.Blog = await _data.CustomFields.GetBlogSettings();
 
-                if (!User.Identity.IsAuthenticated)
-                {
+                if (!User.Identity.IsAuthenticated) {
                     model.Post.Author.Email = Constants.DummyEmail;
 
                     if (model.Older != null)
                         model.Older.Author.Email = Constants.DummyEmail;
                     if (model.Newer != null)
                         model.Newer.Author.Email = Constants.DummyEmail;
-                }                 
+                }
 
-                if (format.ToUpper() == "HTML")
-                {
+                if (format.ToUpper() == "HTML") {
                     model.Post.Description = Markdown.ToHtml(model.Post.Description);
                     model.Post.Content = Markdown.ToHtml(model.Post.Content);
                 }
                 return model;
-            }
-            else
-            {
+            } else {
                 var blog = await _data.CustomFields.GetBlogSettings();
                 return new PostModel { Blog = blog };
             }
@@ -252,7 +245,8 @@ namespace Core.Api
         {
             try
             {
-                post.Slug = await GetSlug(post.Id, post.Title);
+                post.TitleSlug = await GetSlug(post.Id, post.Title);
+
                 var saved = await _data.BlogPosts.SaveItem(post);
                 return Created($"admin/posts/edit?id={saved.Id}", saved);
             }

@@ -183,15 +183,17 @@ namespace Core.Data
                 post = new BlogPost
                 {
                     Title = item.Title,
-                    Slug = item.Slug,
+                    Slug = item.TitleSlug,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
                     Categories = item.Categories,
                     Cover = item.Cover ?? cover,
                     AuthorId = item.Author.Id,
                     IsFeatured = item.Featured,
-                    Published = item.Published
+                    Published = item.Published,
+                    Lang = item.Lang,
                 };
+
                 _db.BlogPosts.Add(post);
                 await _db.SaveChangesAsync();
 
@@ -202,7 +204,7 @@ namespace Core.Data
             {
                 post = _db.BlogPosts.Single(p => p.Id == item.Id);
 
-                post.Slug = item.Slug;
+                post.Slug = item.TitleSlug;
                 post.Title = item.Title;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
@@ -210,6 +212,8 @@ namespace Core.Data
                 post.AuthorId = item.Author.Id;
                 post.Published = item.Published;
                 post.IsFeatured = item.Featured;
+                post.Lang = item.Lang;
+
                 await _db.SaveChangesAsync();
             }
             return await Task.FromResult(item);
@@ -258,7 +262,7 @@ namespace Core.Data
             var post = new PostItem
             {
                 Id = p.Id,
-                Slug = p.Slug,
+                TitleSlug = p.Slug,
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
@@ -268,7 +272,8 @@ namespace Core.Data
                 Rating = p.Rating,
                 Published = p.Published,
                 Featured = p.IsFeatured,
-                Author = _db.Authors.Single(a => a.Id == p.AuthorId)
+                Author = _db.Authors.Single(a => a.Id == p.AuthorId),
+                Lang = p.Lang,
             };
             if(post.Author != null)
             {
@@ -284,7 +289,7 @@ namespace Core.Data
             return posts.Select(p => new PostItem
             {
                 Id = p.Id,
-                Slug = p.Slug,
+                TitleSlug = p.Slug,
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
@@ -294,7 +299,8 @@ namespace Core.Data
                 Rating = p.Rating,
                 Published = p.Published,
                 Featured = p.IsFeatured,
-                Author = _db.Authors.Single(a => a.Id == p.AuthorId)
+                Author = _db.Authors.Single(a => a.Id == p.AuthorId),
+                Lang = p.Lang,
             }).Distinct().ToList();
         }
 

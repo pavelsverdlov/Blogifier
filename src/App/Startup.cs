@@ -17,6 +17,8 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Rewrite;
+using App.Localization;
 
 namespace App
 {
@@ -69,24 +71,17 @@ namespace App
             services.AddLogging(loggingBuilder =>
                 loggingBuilder.AddSerilog(dispose: true));
 
-            services.AddJsonLocalization();
-
-            services.Configure<RequestLocalizationOptions>(options =>
-            {
-                var supportedCultures = new[]
-                {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("ru-RU"),
-                    new CultureInfo("zh-cn"),
-                    new CultureInfo("zh-tw")
-                };
-
-                options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
-                options.SupportedCultures = supportedCultures;
-                options.SupportedUICultures = supportedCultures;
+            services.AddJsonLocalization(options => {
+                //"Resources" by default
+                //options.ResourcesPath;
             });
 
-            services.AddRouting(options => options.LowercaseUrls = true);
+            services.ConfigureLocalizationOptions();
+
+            services.AddRouting(options => {
+                options.LowercaseUrls = true;
+                options.AppendTrailingSlash = true;
+            });
 
             services.AddMvc()
             .AddViewLocalization()
@@ -131,13 +126,19 @@ namespace App
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
 
+            app.UseHttpsRedirection();
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+
+           // app.UseResponseCompression();
+
             app.UseRequestLocalization();
+            app.UseMiddleware<LocalizationMiddleware>(new SectionsToIgnoreLocalization("/admin/", "/api/", "/account/"));
 
             app.UseSwagger();
             app.UseSwaggerUI(setupAction =>
@@ -150,16 +151,24 @@ namespace App
 
             AppSettings.WebRootPath = env.WebRootPath;
             AppSettings.ContentRootPath = env.ContentRootPath;
+            //app.UseMvc();
 
-            app.UseMvc(routes =>
-            {
+            app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Blog}/{action=Index}/{id?}");
+                    template: "{culture}/{controller}/{action}/{id?}",
+                    defaults: new {
+                        culture = "en",
+                        controller = "Blog",
+                        action = "Index"
+                    }
+                );
             });
 
             app.UseSpa(spa => { });
             app.UseCors(options => options.AllowAnyOrigin());
         }
     }
+
+    
 }

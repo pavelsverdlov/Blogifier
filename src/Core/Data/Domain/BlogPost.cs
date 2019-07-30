@@ -38,5 +38,9 @@ namespace Core.Data
         public bool IsFeatured { get; set; }
 
         public DateTime Published { get; set; }
+
+        [StringLength(2)]
+        [Required]
+        public string Lang { get; set; }
     }
 }

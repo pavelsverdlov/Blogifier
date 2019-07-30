@@ -14,7 +14,7 @@ namespace Core.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024");
+                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity("Core.Data.AppUser", b =>
                 {
@@ -71,9 +71,6 @@ namespace Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("AppUserId")
-                        .HasMaxLength(160);
-
                     b.Property<string>("AppUserName")
                         .HasMaxLength(160);
 
@@ -118,6 +115,10 @@ namespace Core.Migrations
                         .HasMaxLength(450);
 
                     b.Property<bool>("IsFeatured");
+
+                    b.Property<string>("Lang")
+                        .IsRequired()
+                        .HasMaxLength(2);
 
                     b.Property<int>("PostViews");
 

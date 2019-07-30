@@ -1,5 +1,6 @@
 ﻿using Core.Helpers;
 using System;
+using System.Globalization;
 using System.Linq;
 
 namespace Core.Data
@@ -48,7 +49,8 @@ namespace Core.Data
                 PostViews = 5,
                 Rating = 4.5,
                 IsFeatured = true,
-                Published = DateTime.UtcNow.AddDays(-100)
+                Published = DateTime.UtcNow.AddDays(-100),
+                Lang = CultureInfo.GetCultureInfo("en-US").TwoLetterISOLanguageName
             });
 
             context.BlogPosts.Add(new BlogPost
@@ -62,7 +64,8 @@ namespace Core.Data
                 Cover = "data/admin/cover-globe.png",
                 PostViews = 15,
                 Rating = 4.0,
-                Published = DateTime.UtcNow.AddDays(-55)
+                Published = DateTime.UtcNow.AddDays(-55),
+                Lang = CultureInfo.GetCultureInfo("en-US").TwoLetterISOLanguageName
             });
 
             context.BlogPosts.Add(new BlogPost
@@ -75,7 +78,8 @@ namespace Core.Data
                 Cover = "data/demo/demo-cover.jpg",
                 PostViews = 25,
                 Rating = 3.5,
-                Published = DateTime.UtcNow.AddDays(-10)
+                Published = DateTime.UtcNow.AddDays(-10),
+                Lang = CultureInfo.GetCultureInfo("en-US").TwoLetterISOLanguageName
             });
 
             context.Notifications.Add(new Notification

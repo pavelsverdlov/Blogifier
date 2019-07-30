@@ -37,7 +37,7 @@ namespace Core.Data
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-        public string Slug { get; set; }
+        public string Slug => $"{Published.Year}/{Published.Month}/{Published.Day}/{TitleSlug}";
         public string Description { get; set; }
         [Required]
         public string Content { get; set; }
@@ -51,6 +51,9 @@ namespace Core.Data
 
         public Author Author { get; set; }
         public SaveStatus Status { get; set; }
+
+        public string Lang { get; set; }
+        public string TitleSlug { get; set; }
 
         #region IEquatable
         // to be able compare two posts
