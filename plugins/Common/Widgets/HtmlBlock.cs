@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Common.Widgets
 {
+    /*
+     * Dynamic Widget
+     */
+
     [ViewComponent(Name = "HtmlBlock")]
     public class HtmlBlock : ViewComponent
     {

@@ -33,17 +33,16 @@ namespace App.Controllers {
 
         [HttpGet("{culture}")]
 
-        public async Task<IActionResult> Index(int page = 1, string term = "")
+        public async Task<IActionResult> Index(string culture, int page = 1, string term = "")
         {
-            var name = CultureInfo.CurrentCulture.Name;
-
             var blog = await _db.CustomFields.GetBlogSettings();
             var pager = new Pager(page, blog.ItemsPerPage);
             IEnumerable<PostItem> posts;
 
             if (string.IsNullOrEmpty(term))
             {
-                posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue, pager);
+                posts = await _db.BlogPosts
+                    .GetList(p => p.Published > DateTime.MinValue && p.Lang == culture, pager);
             }
             else
             {

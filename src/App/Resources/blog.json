@@ -1,0 +1,106 @@
+{
+  "read-more": {
+    "Values": {
+      "en-US": "Read More",
+      "ru-RU": "Читать дальше",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "home": {
+    "Values": {
+      "en-US": "Posts",
+      "ru-RU": "Публикации",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "login": {
+    "Values": {
+      "en-US": "Login",
+      "ru-RU": "Войти",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "page-link-older": {
+    "Values": {
+      "en-US": "Older",
+      "ru-RU": "Старые",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "page-link-newer": {
+    "Values": {
+      "en-US": "Newer",
+      "ru-RU": "Новые",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "search": {
+    "Values": {
+      "en-US": "Search",
+      "ru-RU": "Поиск",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "search-for": {
+    "Values": {
+      "en-US": "Search for...",
+      "ru-RU": "Поиск на сайте",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "search-go": {
+    "Values": {
+      "en-US": "Go!",
+      "ru-RU": "Найти",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "post-list": {
+    "Values": {
+      "en-US": "Post List",
+      "ru-RU": "Публикации",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  "categories": {
+    "Values": {
+      "en-US": "Categories",
+      "ru-RU": "Категории",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  //"static-widget": {
+  //  "Values": {
+  //    "en-US": "Static Widget",
+  //    "ru-RU": "Static Widget",
+  //    "zh-cn": "",
+  //    "zh-tw": ""
+  //  }
+  //},
+  "static-widget-body": {
+    "Values": {
+      "en-US": "This widget has static HTML that theme author put in. It is not updatable and can only display <b>static</b> HTML text.<br> To update it, blogger would need to update theme itself.",
+      "ru-RU": "",
+      "zh-cn": "",
+      "zh-tw": ""
+    }
+  },
+  //"dynamic-widget": {
+  //  "Values": {
+  //    "en-US": "Dynamic Widget",
+  //    "ru-RU": "Dynamic Widget",
+  //    "zh-cn": "",
+  //    "zh-tw": ""
+  //  }
+  //}
+}

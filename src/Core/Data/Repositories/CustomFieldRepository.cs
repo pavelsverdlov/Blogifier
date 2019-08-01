@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Core.Data
@@ -23,6 +24,8 @@ namespace Core.Data
 
         public Task<BlogItem> GetBlogSettings()
         {
+            var currentCulture = CultureInfo.CurrentCulture;
+
             var blog = new BlogItem();
             CustomField title, desc, items, cover, logo, theme, culture;
 
@@ -32,7 +35,7 @@ namespace Core.Data
             cover = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogCover).FirstOrDefault();
             logo = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogLogo).FirstOrDefault();
             theme = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.BlogTheme).FirstOrDefault();
-            culture = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.Culture).FirstOrDefault();
+            //culture = _db.CustomFields.Where(f => f.AuthorId == 0 && f.Name == Constants.Culture).FirstOrDefault();
 
             blog.Title = title == null ? "Blog Title" : title.Content;
             blog.Description = desc == null ? "Short blog description" : desc.Content;
@@ -40,7 +43,7 @@ namespace Core.Data
             blog.Cover = cover == null ? "lib/img/cover.png" : cover.Content;
             blog.Logo = logo == null ? "lib/img/logo-white.png" : logo.Content;
             blog.Theme = theme == null ? "Standard" : theme.Content;
-            blog.Culture = culture == null ? "en-US" : culture.Content;
+            blog.Culture = currentCulture.Name; //culture == null ? "en-US" : culture.Content;
 
             return Task.FromResult(blog);
         }
