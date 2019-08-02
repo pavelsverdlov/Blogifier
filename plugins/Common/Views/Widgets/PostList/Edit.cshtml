@@ -28,7 +28,7 @@
     if (string.IsNullOrEmpty(selectedAuth)) { selectedAuth = "All"; }
     if (string.IsNullOrEmpty(selectedCat)) { selectedCat = "All"; }
     if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
-    if (string.IsNullOrEmpty(template)) { template = "<a href=\"/posts/{0}\" class=\"list-group-item list-group-item-action\">{1}</a>"; }
+    if (string.IsNullOrEmpty(template)) { template = "<a href=\"{0}/posts/{1}\" class=\"list-group-item list-group-item-action\">{2}</a>"; }
 }
 <form method="post" action="~/widgets/api/postlist/edit" asp-antiforgery="true">
     <div class="form-group">
@@ -64,11 +64,12 @@
         </select>
     </div>
     <div class="form-group">
-        <label class="form-group-label">{0} = slug</label>
-        <label class="form-group-label">{1} = title</label>
-        <label class="form-group-label">{2} = published date</label>
-        <label class="form-group-label">{3} = cover</label>
-        <label class="form-group-label">{4} = description</label>
+        <label class="form-group-label">{0} = lang</label>
+        <label class="form-group-label">{1} = slug</label>
+        <label class="form-group-label">{2} = title</label>
+        <label class="form-group-label">{3} = published date</label>
+        <label class="form-group-label">{4} = cover</label>
+        <label class="form-group-label">{5} = description</label>
         <textarea rows="2" id="txtTemplate" name="txtTemplate" class="form-control">@template</textarea>
     </div>
     <div class="form-group">

@@ -60,7 +60,24 @@ namespace Common.Widgets
             if (!int.TryParse(maxRecords, out maxRec))
                 maxRec = 10;
 
-            var model = new PostListWidgetModel { Title = widget, Posts = posts.Take(maxRec).ToList(), Template = template };
+            var models = posts.Select(p =>
+                new PostItem {
+                    Id = p.Id,
+                    TitleSlug = p.Slug,
+                    Title = p.Title,
+                    Description = p.Description,
+                    Content = p.Content,
+                    Categories = p.Categories,
+                    Cover = p.Cover,
+                    PostViews = p.PostViews,
+                    Rating = p.Rating,
+                    Published = p.Published,
+                    Featured = p.IsFeatured,
+                    Author = _db.Authors.Single(a => a.Id == p.AuthorId),
+                    Lang = p.Lang,
+                });
+
+            var model = new PostListWidgetModel { Title = widget, Posts = models.Take(maxRec).ToList(), Template = template };
 
             return View("~/Views/Widgets/PostList/Index.cshtml", model);
         }
@@ -99,6 +116,6 @@ namespace Common.Widgets
     {
         public string Title { get; set; }
         public string Template { get; set; }
-        public List<BlogPost> Posts { get; set; }
+        public List<PostItem> Posts { get; set; }
     }
 }

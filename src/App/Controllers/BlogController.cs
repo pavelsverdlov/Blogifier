@@ -76,7 +76,7 @@ namespace App.Controllers {
         {
             try
             {
-                var model = await _db.BlogPosts.GetModel(slug);
+                var model = await _db.BlogPosts.GetModel(slug);//TODO: add culture to get post 
                 model.Post.Content = Markdown.ToHtml(model.Post.Content);
 
                 model.Blog = await _db.CustomFields.GetBlogSettings();
@@ -96,13 +96,15 @@ namespace App.Controllers {
         }
 
         [HttpGet("{culture}/authors/{name}")]
-        public async Task<IActionResult> Authors(string name, int page = 1)
+        public async Task<IActionResult> Authors(string culture, string name, int page = 1)
         {
             var blog = await _db.CustomFields.GetBlogSettings();
             var author = await _db.Authors.GetItem(a => a.AppUserName == name);
 
             var pager = new Pager(page, blog.ItemsPerPage);
-            var posts = await _db.BlogPosts.GetList(p => p.Published > DateTime.MinValue && p.AuthorId == author.Id, pager);
+            var posts = await _db.BlogPosts.GetList(p => 
+                p.Published > DateTime.MinValue && p.AuthorId == author.Id && p.Lang == culture,
+                pager);
 
             if (pager.ShowOlder) pager.LinkToOlder = $"authors/{name}?page={pager.Older}";
             if (pager.ShowNewer) pager.LinkToNewer = $"authors/{name}?page={pager.Newer}";

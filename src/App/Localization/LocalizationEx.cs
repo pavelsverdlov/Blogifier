@@ -9,13 +9,16 @@ using System.Threading.Tasks;
 
 namespace App.Localization {
     static class SupportedCultureHelper {
+        const string en_Name = "en-US";
+        const string ru_Name = "ru-RU";
+
         public static readonly RequestCulture DefaultRequest =
-            new RequestCulture(culture: "en-US", uiCulture: "en-US");
+            new RequestCulture(culture: en_Name, uiCulture: en_Name);
 
         public static readonly CultureInfo[] Cultures = new[]
                 {
-                    new CultureInfo("en-US"),
-                    new CultureInfo("ru-RU"),
+                    new CultureInfo(en_Name),
+                    new CultureInfo(ru_Name),
                     new CultureInfo("zh-cn"),
                     new CultureInfo("zh-tw")
                 };
@@ -24,16 +27,26 @@ namespace App.Localization {
             culture = CultureInfo.CurrentCulture;
             switch (part) {
                 case "ru":
-                    culture = new CultureInfo("ru-RU");
+                    culture = new CultureInfo(ru_Name);
                     break;
                 case "en":
-                    culture = new CultureInfo("en-US");
+                    culture = new CultureInfo(en_Name);
                     break;
                 default:
                     return false;
             }
             return true;
         }
+        public static string GetCultureTagOrDefault(CultureInfo culture) {
+            var part = "en";
+            switch (culture.Name) {
+                case ru_Name:
+                    part = "ru";
+                    break;
+            }
+            return part;
+        }
+
 
     }
 

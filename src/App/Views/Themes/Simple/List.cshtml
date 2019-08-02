@@ -29,10 +29,10 @@
                             <div class="card-body">
                                 <h2 class="card-title">@post.Title</h2>
                                 <p class="card-text">@Html.Raw(post.Description)</p>
-                                <a href="~/@culture/posts/@post.Slug" class="btn btn-primary">@Localizer["read-more"] &rarr;</a>
+                                <a href="~/@post.Lang/posts/@post.Slug" class="btn btn-primary">@Localizer["read-more"] &rarr;</a>
                             </div>
                             <div class="card-footer text-muted">
-                                <a href="~/authors/@post.Author.AppUserName">@post.Author.DisplayName</a>
+                                <a href="~/@post.Lang/authors/@post.Author.AppUserName">@post.Author.DisplayName</a>
                                 @post.Published.ToString("M", lang), @post.Published.Year
                             </div>
                         </div>

@@ -1,6 +1,6 @@
 ﻿@foreach (var item in Model.Posts)
 {
-    var post = (Core.Data.BlogPost)item;
+    var post = (Core.Data.PostItem)item;
     var pub = post.Published.ToFriendlyDateString();
-    @Html.Raw(string.Format(Model.Template, item.Slug, item.Title, pub, item.Cover, item.Description))
+    @Html.Raw(string.Format(Model.Template, item.Lang, item.Slug, item.Title, pub, item.Cover, item.Description))
 }

@@ -24,6 +24,8 @@ namespace App.Localization {
         }
     }
     class LocalizationMiddleware {
+        const char slash = '/';
+
         readonly RequestDelegate next;
         readonly SectionsToIgnoreLocalization notLocalizedSection;
 
@@ -34,22 +36,23 @@ namespace App.Localization {
 
         public async Task InvokeAsync(HttpContext context) {
             var val = context.Request.Path.Value;
-            var url = val.EndsWith('/') ? val : string.Concat(context.Request.Path.Value,'/');
+            var url = val.EndsWith(slash) ? val : string.Concat(context.Request.Path.Value, slash);
 
             if (notLocalizedSection.Any(x => url.Contains(x))) {
                 await next(context);
                 return;
             }
 
-            var culture = context.Request.Path.Value.TrimStart('/');
-            var start = culture.IndexOf('/');
+            var culture = context.Request.Path.Value.TrimStart(slash);
+            var start = culture.IndexOf(slash);
             if (start != -1) {
                 culture = culture.Substring(0, start);
             }
 
             if (!SupportedCultureHelper.TryGetCultureByUrlPart(culture, out var cultureinfo)) {
-                var part = context.Request.Path.HasValue ? url.TrimStart('/') : string.Empty;
-                context.Response.Redirect(string.Concat("/en/", part));
+                var part = context.Request.Path.HasValue ? url.TrimStart(slash) : string.Empty;
+                var tag = SupportedCultureHelper.GetCultureTagOrDefault(CultureInfo.CurrentCulture);
+                context.Response.Redirect(string.Concat(slash, tag, slash, part));
                 return;
             }
 
