@@ -29,13 +29,13 @@ namespace Common.Widgets
             if (string.IsNullOrEmpty(tmpl)) tmpl = "<a href=\"/categories/{0}\" class=\"list-group-item list-group-item-action\">{0}</a>";
 
             var cats = await _db.BlogPosts.Categories();
-            var model = new CategoryWidgetModel { Template = tmpl, Categories = new List<CategoryItem>() };
+            var model = new CategoryWidgetModel { Template = tmpl, Categories = new List<CategoryItemWidget>() };
 
             var catList = cats.Cast<CategoryItem>().ToList();
 
             foreach (var cat in catList.Take(int.Parse(max)))
             {
-                model.Categories.Add(cat);
+                model.Categories.Add(new CategoryItemWidget(cat));
             }
             return View("~/Views/Widgets/Categories/Index.cshtml", model);
         }
@@ -69,6 +69,18 @@ namespace Common.Widgets
     public class CategoryWidgetModel
     {
         public string Template { get; set; }
-        public List<CategoryItem> Categories { get; set; }
+        public List<CategoryItemWidget> Categories { get; set; }
+    }
+    public class CategoryItemWidget {
+        public string CategoryUrl { get; set; }
+        public string Category { get; set; }
+        public int PostCount { get; set; }
+        
+
+        public CategoryItemWidget(CategoryItem cat) {
+            Category = cat.Category;
+            PostCount = cat.PostCount;
+            CategoryUrl = System.Uri.EscapeDataString(Category);
+        }
     }
 }
