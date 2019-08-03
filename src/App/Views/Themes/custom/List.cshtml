@@ -1,6 +1,10 @@
-﻿@model Core.Data.ListModel
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+@model Core.Data.ListModel
 @{
     var pgr = Model.Pager;
+    var lang = System.Globalization.CultureInfo.CurrentUICulture;
+    var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -16,39 +20,35 @@
                     @Model.Blog.Title
                     <small>@Model.Blog.Description</small>
                 </h1>
-                @if (Model != null && Model.Posts != null && Model.Posts.Any())
-                {
-                    foreach (var post in Model.Posts)
-                    {
+                @if (Model != null && Model.Posts != null && Model.Posts.Any()) {
+                    foreach (var post in Model.Posts) {
                         var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
                         img = $"{Url.Content("~/")}{img}";
                         <div class="card mb-4">
-                            <img class="card-img-top" src="@img" alt="Card image cap">
+                            
                             <div class="card-body">
                                 <h2 class="card-title">@post.Title</h2>
+                                @*<img class="card-img-top" src="@img" alt="Card image cap">*@
                                 <p class="card-text">@Html.Raw(post.Description)</p>
-                                <a href="~/posts/@post.Slug" class="btn btn-primary">Read More &rarr;</a>
+                                <a href="~/@post.Lang/posts/@post.Slug" class="btn btn-primary">@Localizer["read-more"] &rarr;</a>
                             </div>
                             <div class="card-footer text-muted">
-                                Posted on @post.Published.ToString("M"), @post.Published.Year by
-                                <a href="~/authors/@post.Author.AppUserName">@post.Author.DisplayName</a>
+                                <a href="~/@post.Lang/authors/@post.Author.AppUserName">@post.Author.DisplayName</a>
+                                @post.Published.ToString("M", lang), @post.Published.Year
                             </div>
                         </div>
                     }
                 }
-                @if (pgr.ShowOlder || pgr.ShowNewer)
-                {
+                @if (pgr.ShowOlder || pgr.ShowNewer) {
                     <ul class="pagination justify-content-center mb-4">
-                        @if (pgr.ShowOlder)
-                        {
+                        @if (pgr.ShowOlder) {
                             <li class="page-item">
-                                <a class="page-link" href="~/@pgr.LinkToOlder">&larr; Older</a>
-                            </li>
+                                <a class="page-link" href="~/@pgr.LinkToOlder">&larr; @Localizer["page-link-older"]</a>
+</li>
                         }
-                        @if (pgr.ShowNewer)
-                        {
+                        @if (pgr.ShowNewer) {
                             <li class="page-item">
-                                <a class="page-link" href="~/@pgr.LinkToNewer">Newer &rarr;</a>
+                                <a class="page-link" href="~/@pgr.LinkToNewer">@Localizer["page-link-newer"] &rarr;</a>
                             </li>
                         }
                     </ul>
