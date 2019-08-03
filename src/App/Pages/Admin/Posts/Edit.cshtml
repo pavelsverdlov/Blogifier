@@ -46,7 +46,8 @@
                     <a href="~/admin" tabindex="8" class="btn btn-sm btn-outline-light btn-rounded ml-2" aria-label="Cancel" title="Cancel" data-placement="bottom">@Localizer["cancel"]</a>
 
                     <div class="loading loading-sm ml-3"><div class="loading-dot-1"></div><div class="loading-dot-2"></div><div class="loading-dot-3"></div></div>
-                    <div v-if="post.id > 0" class="btn-group ml-auto d-none d-lg-flex">
+                    <!-- v-if="post.id > 0" -->
+                    <div class="btn-group ml-auto d-none d-lg-flex">
                         <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="9" data-tooltip title="@Localizer["cover"]" onclick="fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i></button>
                         <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="10" data-tooltip title="@Localizer["settings"]" onclick="return settings()"><i class="fa fa-cog"></i></button>
                     </div>
@@ -79,6 +80,10 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
                         </div>
                         <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["slug"]</label>
+                                <input type="text" v-model="post.slugtitle" class="form-control" />
+                            </div>
                             <div class="form-group">
                                 <label class="form-group-label">@Localizer["description"]</label>
                                 <textarea rows="4" v-model="post.description" class="form-control" autofocus></textarea>
@@ -121,11 +126,10 @@
                 isAdmin: isAdmin(),
                 id: "0",
                 post: {
-                    id: 0,
+                    id: 0,                    
                     categories: "",
                     content: "",
                     description: "",
-                    slug: "",
                     lang: "en",
                 }
             },
@@ -134,6 +138,7 @@
                     axios.get(getUrl('api/posts/' + this.id + '?format=markdown'))
                         .then(response => {
                             this.post = response.data;
+                            //alert(this.post.slugtitle);
                             simplemde = getEditor(this.post);
                             $('#Post_Id').val(fromQueryString('id'));
                         })
@@ -148,8 +153,8 @@
                     }
 
                     this.post.content = simplemde.value();
-                    if (this.post.slug === null) {
-                        this.post.slug = "";
+                    if (this.post.titleslug === null) {
+                        this.post.titleslug = "";
                     }
 
                     if (!this.post.title || this.post.title.length < 4) {

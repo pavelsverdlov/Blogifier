@@ -63,7 +63,7 @@ namespace Common.Widgets
             var models = posts.Select(p =>
                 new PostItem {
                     Id = p.Id,
-                    TitleSlug = p.Slug,
+                    Slugtitle = p.Slug,
                     Title = p.Title,
                     Description = p.Description,
                     Content = p.Content,

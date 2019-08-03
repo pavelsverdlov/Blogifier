@@ -81,7 +81,7 @@ namespace Core.Services
                                 Title = item.Title,
                                 Description = item.Title,
                                 Content = item.Description,
-                                TitleSlug = await GetSlug(item.Title),
+                                Slugtitle = await GetSlug(item.Title),
                                 Published = item.Published.DateTime,
                                 Status = SaveStatus.Publishing
                             };

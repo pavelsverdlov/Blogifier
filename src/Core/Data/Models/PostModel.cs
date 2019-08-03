@@ -37,7 +37,7 @@ namespace Core.Data
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
-        public string Slug => $"{Published.Year}/{Published.Month}/{Published.Day}/{TitleSlug}";
+        public string Slug => $"{Published.Year}/{Published.Month}/{Published.Day}/{Slugtitle}";
         public string Description { get; set; }
         [Required]
         public string Content { get; set; }
@@ -53,7 +53,9 @@ namespace Core.Data
         public SaveStatus Status { get; set; }
 
         public string Lang { get; set; }
-        public string TitleSlug { get; set; }
+
+        //name like that 'SlugTitle' does not support in Vue!!
+        public string Slugtitle { get; set; }
 
         #region IEquatable
         // to be able compare two posts

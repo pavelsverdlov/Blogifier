@@ -245,7 +245,9 @@ namespace Core.Api
         {
             try
             {
-                post.TitleSlug = await GetSlug(post.Id, post.Title);
+                if (string.IsNullOrWhiteSpace(post.Slugtitle)) {
+                    post.Slugtitle = await GetSlug(post.Id, post.Title);
+                }
 
                 var saved = await _data.BlogPosts.SaveItem(post);
                 return Created($"admin/posts/edit?id={saved.Id}", saved);

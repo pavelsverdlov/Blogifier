@@ -183,7 +183,7 @@ namespace Core.Data
                 post = new BlogPost
                 {
                     Title = item.Title,
-                    Slug = item.TitleSlug,
+                    Slug = item.Slugtitle,
                     Content = item.Content,
                     Description = item.Description ?? item.Title,
                     Categories = item.Categories,
@@ -204,7 +204,7 @@ namespace Core.Data
             {
                 post = _db.BlogPosts.Single(p => p.Id == item.Id);
 
-                post.Slug = item.TitleSlug;
+                post.Slug = item.Slugtitle;
                 post.Title = item.Title;
                 post.Content = item.Content;
                 post.Description = item.Description ?? item.Title;
@@ -262,7 +262,7 @@ namespace Core.Data
             var post = new PostItem
             {
                 Id = p.Id,
-                TitleSlug = p.Slug,
+                Slugtitle = p.Slug,
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
@@ -289,7 +289,7 @@ namespace Core.Data
             return posts.Select(p => new PostItem
             {
                 Id = p.Id,
-                TitleSlug = p.Slug,
+                Slugtitle = p.Slug,
                 Title = p.Title,
                 Description = p.Description,
                 Content = p.Content,
