@@ -47,6 +47,7 @@ namespace Core
             AppSettings.ImageExtensions = app.ImageExtensions;
             AppSettings.ImportTypes = app.ImportTypes;
             AppSettings.SeedData = app.SeedData;
+            AppSettings.Moderator = app.Moderator;
         }
     }
 }

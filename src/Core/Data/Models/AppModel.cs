@@ -9,6 +9,7 @@ namespace Core.Data
         public string ImageExtensions { get; set; }
         public string ImportTypes { get; set; }
         public bool SeedData { get; set; }
+        public string Moderator { get; set; }
     }
 
     public class BlogItem

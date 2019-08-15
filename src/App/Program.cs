@@ -43,6 +43,9 @@ namespace App
                     if (!userMgr.Users.Any())
                     {
                         userMgr.CreateAsync(new AppUser { UserName = "admin", Email = "admin@us.com" }, "admin").Wait();
+                        var user = userMgr.Users.Single(x => x.UserName == "admin");
+                        userMgr.AddToRoleAsync(user, app.Value.Moderator).Wait();
+
                         userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo").Wait();
                     }
 

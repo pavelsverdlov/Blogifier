@@ -19,6 +19,12 @@ using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Rewrite;
 using App.Localization;
+using Core.Services;
+using Comments;
+using Microsoft.AspNetCore.Http;
+using Comments.Contracts;
+using System.Threading.Tasks;
+using App.Comments;
 
 namespace App
 {
@@ -30,10 +36,10 @@ namespace App
         {
             Configuration = configuration;
 
-            Log.Logger = new LoggerConfiguration()
-              .Enrich.FromLogContext()
-              .WriteTo.RollingFile("Logs/{Date}.txt", LogEventLevel.Warning)
-              .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //  .Enrich.FromLogContext()
+            //  .WriteTo.RollingFile("Logs/{Date}.txt", LogEventLevel.Warning)
+            //  .CreateLogger();
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -96,7 +102,8 @@ namespace App
             {
                 options.Conventions.AuthorizeFolder("/Admin");
             })
-            .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly).AddControllersAsServices()
+            .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly)
+            .AddControllersAsServices()
             .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddSwaggerGen(setupAction => {
@@ -134,9 +141,10 @@ namespace App
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
+            // app.UseResponseCompression();
 
-           // app.UseResponseCompression();
-
+            //custom middleware
+            app.UseCustomComments();
             app.UseRequestLocalization();
             app.UseMiddleware<LocalizationMiddleware>(new SectionsToIgnoreLocalization("/admin/", "/api/", "/account/"));
 

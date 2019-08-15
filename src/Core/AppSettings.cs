@@ -12,6 +12,8 @@ namespace Core
         public static string ImportTypes { get; set; }
         public static bool SeedData { get; set; }
 
+        public static string Moderator { get; set; }
+
         public static string WebRootPath { get; set; }
         public static string ContentRootPath { get; set; }
 

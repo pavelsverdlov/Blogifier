@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		azure-pipelines.yml = azure-pipelines.yml
 		README.md = README.md
+		todo.txt = todo.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A720BC3C-C526-4C18-9B8D-4A885BB03CE9}"
@@ -49,6 +50,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{BE5E262F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Upgrade", "src\Upgrade\Upgrade.csproj", "{CECA836F-2FFA-47DA-B846-8F44C2A4B783}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "posts", "posts", "{93AB5B31-FE73-411F-BA64-B34219E0D330}"
+	ProjectSection(SolutionItems) = preProject
+		34373d09-3906-49bf-ae5a-431af38220cd.html = 34373d09-3906-49bf-ae5a-431af38220cd.html
+		vector_algebra.html = vector_algebra.html
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comments", "..\Comments-master\Comments\Comments\Comments.csproj", "{8EE34170-0435-4A7D-B4F7-BC6846DAABB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +84,10 @@ Global
 		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CECA836F-2FFA-47DA-B846-8F44C2A4B783}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EE34170-0435-4A7D-B4F7-BC6846DAABB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EE34170-0435-4A7D-B4F7-BC6846DAABB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EE34170-0435-4A7D-B4F7-BC6846DAABB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EE34170-0435-4A7D-B4F7-BC6846DAABB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +98,8 @@ Global
 		{920B80AA-983C-46ED-8A19-8DC43C839237} = {39614650-0D6E-4502-B87D-184366060F59}
 		{1CBAC56F-3CFB-497A-86B0-9F49CCFC78DB} = {57BDF133-7290-40EA-8503-1BFCBBEEBB3A}
 		{CECA836F-2FFA-47DA-B846-8F44C2A4B783} = {39614650-0D6E-4502-B87D-184366060F59}
+		{93AB5B31-FE73-411F-BA64-B34219E0D330} = {4E0164ED-2249-4973-B3FD-180172EBCD0A}
+		{8EE34170-0435-4A7D-B4F7-BC6846DAABB6} = {39614650-0D6E-4502-B87D-184366060F59}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D601BCCC-A1D9-415B-94B5-B3C0EF4AAF0B}

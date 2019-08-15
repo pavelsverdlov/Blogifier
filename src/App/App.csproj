@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Comments-master\Comments\Comments\Comments.csproj" />
     <ProjectReference Include="..\..\plugins\Common\Common.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>
@@ -33,12 +34,24 @@
   </ItemGroup>
  
   <ItemGroup>
+    <EmbeddedResource Remove="Views\Themes\custom\Shared\_i18nLocalization.cshtml" />
+  </ItemGroup>
+ 
+  <ItemGroup>
     <Content Update="Resources\blog.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Resources\admin.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\i18n\comments-ru.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+ 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+    <Folder Include="Views\Themes\Simple\" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
