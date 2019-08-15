@@ -1,8 +1,13 @@
 ﻿@model PostModel
+
+@{
+    var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@culture" dir="ltr">
 <head>
-    <partial name="~/Views/Themes/Simple/Shared/_Header.cshtml" />
+    <partial name="~/Views/Themes/custom/Shared/_Header.cshtml" />
 </head>
 <body>
     <style>
@@ -23,8 +28,127 @@
             margin-bottom: 40px;
             font-weight: 500;
         }
+
+
+
+        .comments-middleware-view-all-comments {
+            margin: 20px 0 0;
+        }
+
+        #comments-middleware-view {
+            margin-top: 20px;
+        }
+
+            #comments-middleware-view .post-comment {
+                font-size: 15px;
+            }
+
+                #comments-middleware-view .post-comment .post-comment-from {
+                    margin: 0 20px 0px 20px;
+                }
+
+                #comments-middleware-view .post-comment .comments-footer {
+                    margin: 0 20px 0 20px;
+                }
+
+                #comments-middleware-view .post-comment #comments-middleware-view-all-comments {
+                    margin: 0 20px 0 20px;
+                }
+
+                #comments-middleware-view .post-comment .comment-text {
+                    padding-top: 1.25rem;
+                }
+
+            #comments-middleware-view textarea {
+                resize: vertical !important;
+                min-height: 120px;
+                width: 100%;
+                font-family: sans-serif;
+                border-radius: 4px;
+                font-size: 16px;
+                border: solid 1px lightgray;
+                margin: 4px;
+            }
+
+            #comments-middleware-view input {
+                border-radius: 4px;
+                border: solid 1px lightgray;
+                margin: 4px;
+                font-size: 20px;
+                width: 100%;
+            }
+
+            #comments-middleware-view h4 {
+                padding: 1.25rem;
+            }
+
+            #comments-middleware-view .comment-description {
+            }
+
+                #comments-middleware-view .comment-description input {
+                    width: auto;
+                }
+
+            #comments-middleware-view button {
+                width: 90px;
+                border-radius: 4px;
+                border: solid 1px gray;
+                padding: 8px;
+            }
+
+                #comments-middleware-view button:hover {
+                    background-color: aliceblue;
+                }
+
+            #comments-middleware-view div.post-comment a.post-comment-toggle {
+                margin: 0px 20px 0px 20px;
+                position: absolute;
+                right: 0px;
+            }
+
+            #comments-middleware-view div.comment-preview {
+                border: solid gray 1px;
+                margin: 5px 0px 5px 5px;
+                padding: 5px;
+            }
+
+            #comments-middleware-view .floatClear {
+                clear: both;
+            }
+
+        .comment-middleware-single-comment-avatar {
+            float: left;
+        }
+
+        .comment-middleware-single-comment-poster-name {
+            float: left;
+            margin-left: 5px;
+            font-weight: 600;
+        }
+
+        .comment-middleware-single-comment-time {
+            float: right;
+            opacity: 0.75;
+            margin-right: 5px;
+            margin-top: 5px;
+        }
+
+        span.comments-middleware-mod {
+            border: solid gray 1px;
+            border-radius: 4px;
+            color: gray;
+            padding: 0 4px;
+        }
+
+        .comments-middlweare-unapproved-comment {
+            opacity: 0.5;
+        }
+
+        .comments-middleware-warning {
+            color: #cc2222;
+        }
     </style>
-    <partial name="~/Views/Themes/Simple/Shared/_Navbar.cshtml" />
+    <partial name="~/Views/Themes/custom/Shared/_Navbar.cshtml" />
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -34,6 +158,7 @@
                      <small>@Model.Blog.Description</small>
                  </h1>
                     -->
+
                 <div class="card mb-4">
                     <img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">
                     <div class="card-body post">
@@ -44,16 +169,43 @@
                         <a href="~/authors/@Model.Post.Author.AppUserName">@Model.Post.Author.DisplayName</a>
                         @Model.Post.Published.ToString("M"), @Model.Post.Published.Year
                     </div>
+                    <div id="comments-middleware"></div>
                 </div>
             </div>
             <div class="col-md-4">
-                <partial name="~/Views/Themes/Simple/Shared/_Sidebar.cshtml" />
+                <partial name="~/Views/Themes/custom/Shared/_Sidebar.cshtml" />
             </div>
         </div>
     </div>
 
+    <script src="/comments-middleware/loader.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>
-    <partial name="~/Views/Themes/Simple/Shared/_Footer.cshtml" />
+
+    <partial name="~/Views/Themes/custom/Shared/_Footer.cshtml" />
+    <partial name="~/Views/Themes/custom/Shared/_i18nLocalization.cshtml" />
+
+    <script>
+        (function () {
+            function waitCommentsBlock() {
+                if ($('#comments-middleware-view').length == 0) {
+                    window.requestAnimationFrame(waitCommentsBlock);
+                } else {
+                    $('#comments-middleware-view').i18n();
+                }
+            };
+            
+            $.i18n().load(
+                {
+                    "ru": '/i18n/comments-ru.json',
+                    "en": '/i18n/comments-en.json',
+                }                
+            ).done(function () {
+                $('html').i18n();
+                waitCommentsBlock();
+            });
+            
+        })();
+    </script>
 
 </body>
 </html>

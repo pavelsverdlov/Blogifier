@@ -84,7 +84,7 @@ namespace App.Controllers {
                 model.Blog.Cover = string.IsNullOrEmpty(model.Post.Cover) ? 
                     $"{Url.Content("~/")}{model.Blog.Cover}": 
                     $"{Url.Content("~/")}{model.Post.Cover}";
-                model.Blog.Title = model.Post.Title;
+                //model.Blog.Title = model.Post.Title;
 
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }

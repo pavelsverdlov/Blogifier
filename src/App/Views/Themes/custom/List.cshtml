@@ -4,22 +4,22 @@
 @{
     var pgr = Model.Pager;
     var lang = System.Globalization.CultureInfo.CurrentUICulture;
-    var culture = System.Globalization.CultureInfo.CurrentUICulture.TwoLetterISOLanguageName;
+    var culture = lang.TwoLetterISOLanguageName;
 }
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@culture">
 <head>
-    <partial name="~/Views/Themes/Simple/Shared/_Header.cshtml" />
+    <partial name="~/Views/Themes/custom/Shared/_Header.cshtml" />
 </head>
 <body>
-    <partial name="~/Views/Themes/Simple/Shared/_Navbar.cshtml" />
+    <partial name="~/Views/Themes/custom/Shared/_Navbar.cshtml" />
     <div class="container">
         <div class="row">
             <div class="col-md-8">
-                <h1 class="my-4">
+                @*<h1 class="my-4">
                     @Model.Blog.Title
                     <small>@Model.Blog.Description</small>
-                </h1>
+                </h1>*@
                 @if (Model != null && Model.Posts != null && Model.Posts.Any()) {
                     foreach (var post in Model.Posts) {
                         var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
@@ -44,7 +44,7 @@
                         @if (pgr.ShowOlder) {
                             <li class="page-item">
                                 <a class="page-link" href="~/@pgr.LinkToOlder">&larr; @Localizer["page-link-older"]</a>
-</li>
+                            </li>
                         }
                         @if (pgr.ShowNewer) {
                             <li class="page-item">
@@ -55,10 +55,10 @@
                 }
             </div>
             <div class="col-md-4">
-                <partial name="~/Views/Themes/Simple/Shared/_Sidebar.cshtml" />
+                <partial name="~/Views/Themes/custom/Shared/_Sidebar.cshtml" />
             </div>
         </div>
     </div>
-    <partial name="~/Views/Themes/Simple/Shared/_Footer.cshtml" />
+    <partial name="~/Views/Themes/custom/Shared/_Footer.cshtml" />
 </body>
 </html>
