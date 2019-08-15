@@ -1,0 +1,13 @@
+{
+  "comments-header": "Comments",
+  "comments-show-form": "Add comment",
+  "comments-count": "Comments ",
+  "comments-post-btn": "Post",
+  "comments-loading": "Loading ...",
+  "comments-warning": "Your comment is posted, however it requires moderator approval in order to be visible.",
+  "comments-please-reload": "This comment is updated/deleted, please reload page to see changes",
+  "comments-approve-btn": "Approve",
+  "comments-disapprove-btn": "Disapprove",
+  "comments-delete-btn": "Delete",
+  "comments-login-as": "logged in as"
+}

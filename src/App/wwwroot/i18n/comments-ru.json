@@ -1,0 +1,13 @@
+{
+  "comments-header": "Коментарии",
+  "comments-show-form": "Добавьте комментарий",
+  "comments-count": "Комментарии ",
+  "comments-post-btn": "Добавить",
+  "comments-loading": "Загружается ...",
+  "comments-warning": "Комментарий был опубликован, однако требуется проверка модератором перед показом.",
+  "comments-please-reload": "Комментарий был изменен/удален, перезагрузите страницу чтобы увидеть изменения.",
+  "comments-approve-btn": "Разрешить",
+  "comments-disapprove-btn": "Запретить",
+  "comments-delete-btn": "Удалить",
+  "comments-login-as": "авторизован как"
+}
