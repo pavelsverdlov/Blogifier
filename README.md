@@ -1,3 +1,18 @@
+# Updates
+
+* localization for 'custom' scheme
+** host url to host/culture/...
+** post url: {culture}/posts/{year}/{month}/{day}/{slug}
+** widgets etc. 
+
+* support categories with particular symbols (for example 'C#')
+* add i18n localization
+* add comments Middlware based on ![Comments](https://github.com/pavelsverdlov/Comments)
+*
+
+
+
+
 ## What is Blogifier
 
 Blogifier is simple, beautiful, light-weight open source blog written in .NET Core. This cross-platform, highly extendable and customizable web application brings all the best blogging features in small, portable package.
