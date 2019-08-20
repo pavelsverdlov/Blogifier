@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Comments-master\Comments\Comments\Comments.csproj" />
+    <ProjectReference Include="..\..\Comments\Comments\Comments\Comments.csproj" />
     <ProjectReference Include="..\..\plugins\Common\Common.csproj" />
     <ProjectReference Include="..\Core\Core.csproj" />
   </ItemGroup>

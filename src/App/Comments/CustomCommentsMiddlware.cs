@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 
 namespace App.Comments {
     static class ApplicationBuilderExtenstions {
@@ -52,9 +53,13 @@ namespace App.Comments {
         }
 
         void OnInformModerator(CommentModel model) {
-            email.SendEmail(ModeratorEmail,
-                $"New comment {model.PosterName}",
-                $"Content: '{model.CommentContentSource}'");
+            try {
+                email.SendEmail(ModeratorEmail,
+                    $"New comment {model.PosterName}",
+                    $"Content: '{model.CommentContentSource}'");
+            }catch(Exception ex) {
+                Log.Logger.Error(ex, $"can't send email to {ModeratorEmail}");
+            }
         }
     }
    
