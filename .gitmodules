@@ -1,0 +1,3 @@
+[submodule "Comments"]
+	path = Comments
+	url = https://github.com/pavelsverdlov/Comments.git
