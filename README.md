@@ -1,11 +1,12 @@
-# Updates
 
-* localization for 'custom' scheme
-** host url to host/culture/...
-** post url: {culture}/posts/{year}/{month}/{day}/{slug}
-** widgets etc. 
 
-* support categories with particular symbols (for example 'C#')
+### localization for 'custom' scheme
+* host url to host/culture/...
+* post url: {culture}/posts/{year}/{month}/{day}/{slug}
+* widgets etc. 
+
+### Updates
+* support categories with particular symbols (for example '#')
 * add i18n localization
 * add comments Middlware based on ![Comments](https://github.com/pavelsverdlov/Comments)
 *
