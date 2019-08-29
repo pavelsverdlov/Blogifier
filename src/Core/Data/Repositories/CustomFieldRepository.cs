@@ -42,7 +42,7 @@ namespace Core.Data
             blog.ItemsPerPage = items == null ? 10 : int.Parse(items.Content);
             blog.Cover = cover == null ? "lib/img/cover.png" : cover.Content;
             blog.Logo = logo == null ? "lib/img/logo-white.png" : logo.Content;
-            blog.Theme = theme == null ? "Standard" : theme.Content;
+            blog.Theme = theme == null ? Constants.DefaultTheme : theme.Content;
             blog.Culture = currentCulture.Name; //culture == null ? "en-US" : culture.Content;
 
             return Task.FromResult(blog);

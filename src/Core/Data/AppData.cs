@@ -22,7 +22,7 @@ namespace Core.Data
                 IsAdmin = true,
                 Created = DateTime.UtcNow.AddDays(-120)
             });
-
+            /*
             context.Authors.Add(new Author
             {
                 AppUserName = "demo",
@@ -31,11 +31,11 @@ namespace Core.Data
                 Bio = "Short description about this user and blog.",
                 Created = DateTime.UtcNow.AddDays(-110)
             });
-
+            */
             context.SaveChanges();
 
             var adminId = context.Authors.Single(a => a.AppUserName == "admin").Id;
-            var demoId = context.Authors.Single(a => a.AppUserName == "demo").Id;
+           // var demoId = context.Authors.Single(a => a.AppUserName == "demo").Id;
 
             context.BlogPosts.Add(new BlogPost
             {
@@ -52,7 +52,7 @@ namespace Core.Data
                 Published = DateTime.UtcNow.AddDays(-100),
                 Lang = CultureInfo.GetCultureInfo("en-US").TwoLetterISOLanguageName
             });
-
+            /*
             context.BlogPosts.Add(new BlogPost
             {
                 Title = "Blogifier Features",
@@ -81,7 +81,7 @@ namespace Core.Data
                 Published = DateTime.UtcNow.AddDays(-10),
                 Lang = CultureInfo.GetCultureInfo("en-US").TwoLetterISOLanguageName
             });
-
+            */
             context.Notifications.Add(new Notification
             {
                 Notifier = "Blogifier",

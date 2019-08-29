@@ -39,6 +39,12 @@ namespace App
 
                 if (app.Value.SeedData)
                 {
+                    var roleMgr = (RoleManager<IdentityRole>)services.GetRequiredService(typeof(RoleManager<IdentityRole>));
+
+                    if (!roleMgr.RoleExistsAsync(app.Value.Moderator).Result) {
+                        roleMgr.CreateAsync(new IdentityRole(app.Value.Moderator)).Wait();
+                    }
+
                     var userMgr = (UserManager<AppUser>)services.GetRequiredService(typeof(UserManager<AppUser>));
                     if (!userMgr.Users.Any())
                     {
@@ -46,7 +52,7 @@ namespace App
                         var user = userMgr.Users.Single(x => x.UserName == "admin");
                         userMgr.AddToRoleAsync(user, app.Value.Moderator).Wait();
 
-                        userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo").Wait();
+                      //  userMgr.CreateAsync(new AppUser { UserName = "demo", Email = "demo@us.com" }, "demo").Wait();
                     }
 
                     if (!context.BlogPosts.Any())

@@ -60,8 +60,10 @@ namespace App
             {
                 AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
             }
-            
-            services.AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient);
+
+
+            services
+                .AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient); 
 
             services.AddIdentity<AppUser, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
@@ -118,7 +120,7 @@ namespace App
 
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "Custom/themes/simple";
+                configuration.RootPath = "Custom/themes/custom";
             });
             services.AddCors(c =>
             {

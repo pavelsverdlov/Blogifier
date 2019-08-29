@@ -20,5 +20,7 @@
         public static string DummyEmail = "dummy@blog.com";
 
         public static string ThemeEditReturnUrl = "~/admin/settings/theme";
+
+        public static string DefaultTheme = "custom";
     }
 }
