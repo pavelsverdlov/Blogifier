@@ -66,7 +66,10 @@ namespace Core.Data
                 {
                     if (!string.IsNullOrEmpty(p.Categories))
                     {
-                        var cats = p.Categories.ToLower().Split(',');
+                        var cats = p.Categories
+                            .ToLower()
+                            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                            .Select(x=>x.Trim());
                         if (cats.Contains(category.ToLower()))
                         {
                             posts.Add(p);
@@ -235,21 +238,15 @@ namespace Core.Data
             {
                 foreach (var p in _db.BlogPosts.Where(p => p.Categories != null))
                 {
-                    var postcats = p.Categories.Split(',');
-                    if (postcats.Any())
-                    {
-                        foreach (var pc in postcats)
-                        {
-                            if (!cats.Exists(c => c.Category == pc))
-                            {
-                                cats.Add(new CategoryItem { Category = pc, PostCount = 1 });
-                            }
-                            else
-                            {
-                                // updae post count
-                                var tmp = cats.Where(c => c.Category == pc).FirstOrDefault();
-                                tmp.PostCount++;
-                            }
+                    var postcats = p.Categories.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                    foreach (var pc in postcats) {
+                        var val = pc.Trim();
+                        var found = cats.FirstOrDefault(c => c.Category == val);
+                        if (found == null) {
+                            cats.Add(new CategoryItem { Category = val, PostCount = 1 });
+                        } else {
+                            // updae post count
+                            found.PostCount++;
                         }
                     }
                 }

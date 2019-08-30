@@ -83,7 +83,7 @@ namespace Common.Widgets
         public CategoryItemWidget(CategoryItem cat) {
             Category = cat.Category;
             PostCount = cat.PostCount;
-            CategoryUrl = System.Uri.EscapeDataString(Category);
+            CategoryUrl = System.Uri.EscapeDataString(Category.ToLower());
         }
     }
 }

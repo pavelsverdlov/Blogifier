@@ -135,7 +135,7 @@ namespace Core.Api
             {
                 var author = await _data.Authors.GetItem(a => a.AppUserName == User.Identity.Name, !User.Identity.IsAuthenticated);
                 var blog = await _data.CustomFields.GetBlogSettings();
-                return new PostItem { Author = author, Cover = blog.Cover };
+                return new PostItem { Author = author, Cover = blog.Cover, Published = DateTime.Now };
             }               
         }
 
