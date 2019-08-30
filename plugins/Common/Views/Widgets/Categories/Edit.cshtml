@@ -8,7 +8,7 @@
     var maxRecords = _db.CustomFields.GetCustomValue(keyMax);
 
     if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
-    if (string.IsNullOrEmpty(template)) { template = "<a href=\"/{0}/categories/{1}\" class=\"list-group-item list-group-item-action\">{2}</a>"; }
+    if (string.IsNullOrEmpty(template)) { template = Common.Widgets.Categories.Template; }
 }
 <form method="post" action="~/widgets/api/postlist/edit" asp-antiforgery="true">
     <div class="form-group">

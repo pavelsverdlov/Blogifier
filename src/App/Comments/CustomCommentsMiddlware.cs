@@ -15,26 +15,7 @@ namespace App.Comments {
     static class ApplicationBuilderExtenstions {
         public static IApplicationBuilder UseCustomComments(this IApplicationBuilder appBuilder) {
             var options = new CommentsOptions();
-            appBuilder.UseMiddleware<CustomCommentsMiddlware>(options);
-            return appBuilder;
-        }
-    }
-    public class CustomCommentsMiddlware : CommentsMiddlware {
-        const string ModeratorEmail = "";
 
-        IEmailService email;
-
-        public CustomCommentsMiddlware(RequestDelegate next, CommentsOptions options) : base(next, options) {
-            ApplyConf(options);
-        }
-
-        public override Task Invoke(HttpContext ctx) {
-            email = ctx.RequestServices.GetService<IEmailService>();
-
-            return base.Invoke(ctx);
-        }
-
-        void ApplyConf(CommentsOptions options) {
             options.SqliteDbFilePath = "comments.db";
             options.LoadCss = false;
             options.IncludeHashInUrl = true;
@@ -44,8 +25,25 @@ namespace App.Comments {
             //If true, comment's will be visible only after approval of moderator.
             //op.RequireCommentApproval = true;
 
+            appBuilder.UseMiddleware<CustomCommentsMiddlware>(options);
+
+            return appBuilder;
+        }
+    }
+    public class CustomCommentsMiddlware : CommentsMiddlware {
+        const string ModeratorEmail = "";
+
+        IEmailService email;
+
+        public CustomCommentsMiddlware(RequestDelegate next, CommentsOptions options) : base(next, options) {
             options.InformModerator = OnInformModerator;
             options.IsUserAdminModeratorCheck = IsUserAdminModerator;
+        }
+
+        public override Task Invoke(HttpContext ctx) {
+            email = ctx.RequestServices.GetService<IEmailService>();
+
+            return base.Invoke(ctx);
         }
 
         bool IsUserAdminModerator(HttpContext context) {

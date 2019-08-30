@@ -10,6 +10,9 @@ namespace Common.Widgets
     [ViewComponent(Name = "Categories")]
     public class Categories : ViewComponent
     {
+        public const string Template =
+            "<a href=\"/{0}/categories/{1}\" class=\"list-group-item list-group-item-action\">{2}</a>";
+
         IDataService _db;
 
         public Categories(IDataService db)
@@ -26,7 +29,7 @@ namespace Common.Widgets
             var tmpl = _db.CustomFields.GetCustomValue(keyTmpl);
 
             if (string.IsNullOrEmpty(max)) max = "10";
-            if (string.IsNullOrEmpty(tmpl)) tmpl = "<a href=\"/categories/{0}\" class=\"list-group-item list-group-item-action\">{0}</a>";
+            if (string.IsNullOrEmpty(tmpl)) tmpl = Template;
 
             var cats = await _db.BlogPosts.Categories();
             var model = new CategoryWidgetModel { Template = tmpl, Categories = new List<CategoryItemWidget>() };

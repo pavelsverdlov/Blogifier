@@ -10,6 +10,8 @@ namespace Common.Widgets
     [ViewComponent(Name = "PostList")]
     public class PostList : ViewComponent
     {
+        public const string Template = "<a href=\"/{0}/posts/{1}\" class=\"list-group-item list-group-item-action\">{2}</a>";
+
         IDataService _db;
 
         public PostList(IDataService db)
@@ -32,7 +34,9 @@ namespace Common.Widgets
             if (selectedAuth == "All") { selectedAuth = ""; }
             if (selectedCat == "All") { selectedCat = ""; }
             if (string.IsNullOrEmpty(maxRecords)) { maxRecords = "10"; }
-            if (string.IsNullOrEmpty(template)) { template = "<a href=\"/posts/{0}\" class=\"list-group-item list-group-item-action\">{1}</a>"; }
+            if (string.IsNullOrEmpty(template)) {
+                template = Template;
+            }
 
             var posts = _db.BlogPosts.All()
                 .Where(p => p.Published > DateTime.MinValue)
