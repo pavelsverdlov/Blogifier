@@ -151,30 +151,37 @@
     <partial name="~/Views/Themes/custom/Shared/_Navbar.cshtml" />
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <!--
-                    <h1 class="my-4">
-                     @Model.Blog.Title
-                     <small>@Model.Blog.Description</small>
-                 </h1>
-                    -->
 
-                <div class="card mb-4">
-                    <img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">
-                    <div class="card-body post">
-                        <h1 class="my-4">@Model.Post.Title</h1>
-                        @Html.Raw(Model.Post.Content)
+            <div class="col-md-8">
+                <article itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
+                    <!--
+                       <h1 class="my-4">
+                        @Model.Blog.Title
+                        <small>@Model.Blog.Description</small>
+                    </h1>
+                       -->
+                    <div class="card mb-4">
+                        @*<img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">*@
+                        <div class="card-body post">
+                            <header><h1 class="my-4" itemprop="headline">@Model.Post.Title</h1></header>
+                            <div itemprop="articleBody">
+                                @Html.Raw(Model.Post.Content)
+                            </div>
+                        </div>
+                        <footer class="card-footer text-muted">
+                            <a href="~/authors/@Model.Post.Author.AppUserName">@Model.Post.Author.DisplayName</a>
+                            <time datetime="@Model.Post.Published.ToString("yyyy-MM-dd")" itemprop="datePublished">
+                                @Model.Post.Published.ToString("M"), @Model.Post.Published.Year
+                            </time>
+                        </footer>
+                        <div id="comments-middleware"></div>
                     </div>
-                    <div class="card-footer text-muted">
-                        <a href="~/authors/@Model.Post.Author.AppUserName">@Model.Post.Author.DisplayName</a>
-                        @Model.Post.Published.ToString("M"), @Model.Post.Published.Year
-                    </div>
-                    <div id="comments-middleware"></div>
-                </div>
+                </article>
             </div>
             <div class="col-md-4">
                 <partial name="~/Views/Themes/custom/Shared/_Sidebar.cshtml" />
             </div>
+
         </div>
     </div>
 
@@ -193,17 +200,17 @@
                     $('#comments-middleware-view').i18n();
                 }
             };
-            
+
             $.i18n().load(
                 {
                     "ru": '/i18n/comments-ru.json',
                     "en": '/i18n/comments-en.json',
-                }                
+                }
             ).done(function () {
                 $('html').i18n();
                 waitCommentsBlock();
             });
-            
+
         })();
     </script>
 

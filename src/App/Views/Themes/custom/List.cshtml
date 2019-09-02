@@ -17,27 +17,30 @@
         <div class="row">
             <div class="col-md-8">
                 @*<h1 class="my-4">
-                    @Model.Blog.Title
-                    <small>@Model.Blog.Description</small>
-                </h1>*@
+                        @Model.Blog.Title
+                        <small>@Model.Blog.Description</small>
+                    </h1>*@
                 @if (Model != null && Model.Posts != null && Model.Posts.Any()) {
-                    foreach (var post in Model.Posts) {
-                        var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
-                        img = $"{Url.Content("~/")}{img}";
-                        <div class="card mb-4">
-                            
-                            <div class="card-body">
-                                <h2 class="card-title">@post.Title</h2>
-                                @*<img class="card-img-top" src="@img" alt="Card image cap">*@
-                                <p class="card-text">@Html.Raw(post.Description)</p>
-                                <a href="~/@post.Lang/posts/@post.Slug" class="btn btn-primary">@Localizer["read-more"] &rarr;</a>
-                            </div>
-                            <div class="card-footer text-muted">
-                                <a href="~/@post.Lang/authors/@post.Author.AppUserName">@post.Author.DisplayName</a>
-                                @post.Published.ToString("M", lang), @post.Published.Year
-                            </div>
-                        </div>
-                    }
+                    <section itemscope itemtype="http://schema.org/Blog">
+                        @foreach (var post in Model.Posts) {
+                            var img = string.IsNullOrEmpty(post.Cover) ? Model.Blog.Cover : post.Cover;
+                            img = $"{Url.Content("~/")}{img}";
+                            <article itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h2 class="card-title" itemprop="headline">@post.Title</h2>
+                                        @*<img class="card-img-top" src="@img" alt="Card image cap">*@
+                                        <p class="card-text" itemprop="description">@Html.Raw(post.Description)</p>
+                                        <a href="~/@post.Lang/posts/@post.Slug" class="btn btn-primary" title="@Localizer["read-more"]">@Localizer["read-more"] &rarr;</a>
+                                    </div>
+                                    <div class="card-footer text-muted">
+                                        <a href="~/@post.Lang/authors/@post.Author.AppUserName" title="author">@post.Author.DisplayName</a>
+                                        <time datetime="@post.Published.ToString("yyyy-MM-dd")" itemprop="datePublished">@post.Published.ToString("M", lang), @post.Published.Year</time>
+                                    </div>
+                                </div>
+                            </article>
+                        }
+                    </section>
                 }
                 @if (pgr.ShowOlder || pgr.ShowNewer) {
                     <ul class="pagination justify-content-center mb-4">
