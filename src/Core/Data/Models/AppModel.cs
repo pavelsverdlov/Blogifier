@@ -10,6 +10,7 @@ namespace Core.Data
         public string ImportTypes { get; set; }
         public bool SeedData { get; set; }
         public string Moderator { get; set; }
+        public string DbProvider { get; set; }
     }
 
     public class BlogItem

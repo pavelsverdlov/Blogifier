@@ -34,6 +34,7 @@ namespace Core.Extensions
             services.AddScoped<IDataService, DataService>();
             services.AddTransient<IFeedService, FeedService>();
             services.AddTransient<IStorageService, StorageService>();
+            services.AddTransient<IDbStorageService, DbStorageService>();
             services.AddTransient<IImportService, ImportService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IWebService, WebService>();

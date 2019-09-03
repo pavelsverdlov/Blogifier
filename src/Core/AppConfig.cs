@@ -48,6 +48,7 @@ namespace Core
             AppSettings.ImportTypes = app.ImportTypes;
             AppSettings.SeedData = app.SeedData;
             AppSettings.Moderator = app.Moderator;
+            AppSettings.Moderator = app.DbProvider;
         }
     }
 }

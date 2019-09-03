@@ -1,0 +1,75 @@
+﻿@page
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["StorageToolbox"];
+}
+
+<div class="bf-main">
+    <div class="bf-sidebar d-lg-block">
+        <div class="bf-settings-sidebar">
+            <ul class="bf-settings-sidebar-nav">
+                <li>
+                    <h4>@Localizer["Output"]</h4>
+                </li>
+                <li id="messages">
+                    <span></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div id="app" class="bf-body">
+        <form>
+            <div class="bf-content bf-content-boxed bf-settings">
+                <div class="form-group">
+                    <label class="form-group-label">SQL</label>
+                    <textarea type="text" class="form-control" rows="5"
+                              v-model="query.text"></textarea>
+                </div>
+            </div>
+            <div class="bf-content bf-content-boxed bf-settings">
+                <button type="button" class="btn btn-primary btn-main"
+                        :disabled="$v.query.$invalid" v-on:click="save($v)">
+                    Execute
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+        Vue.use(window.vuelidate.default)
+        const { required, minLength, email, sameAs } = window.validators
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                query: {}
+            },
+            validations: {
+                query: {
+                    text: { required }
+                }
+            },
+            methods: {
+                save: function (v) {
+                    axios.post(webRoot + 'api/storagetoolbox', this.query)
+                        .then(function (response) {
+                            toastr.success('executed');
+                            var mess = response.data.message;
+                            $('#messages').append('<li>' + mess +'</li>')
+                        })
+                        .catch(function (error) {
+                            toastr.error(error);
+                        });
+                }
+            },
+            beforeMount() {
+                //  this.load()
+            }
+        });
+
+    </script>
+}

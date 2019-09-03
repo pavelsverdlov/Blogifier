@@ -13,6 +13,7 @@ namespace Core
         public static bool SeedData { get; set; }
 
         public static string Moderator { get; set; }
+        public static string DbProvider { get; set; }
 
         public static string WebRootPath { get; set; }
         public static string ContentRootPath { get; set; }
