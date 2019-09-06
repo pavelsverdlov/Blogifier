@@ -25,7 +25,15 @@
                     <textarea type="text" class="form-control" rows="5"
                               v-model="query.text"></textarea>
                 </div>
+                <div class="form-group">
+                    <label class="form-group-label">@Localizer["Processing"]</label>
+                    <select class="form-control" v-model="query.type">
+                        <option value="0">without result</option>
+                        <option value="1">with result</option>
+                    </select>
+                </div>
             </div>
+           
             <div class="bf-content bf-content-boxed bf-settings">
                 <button type="button" class="btn btn-primary btn-main"
                         :disabled="$v.query.$invalid" v-on:click="save($v)">
@@ -46,7 +54,9 @@
         const app = new Vue({
             el: "#app",
             data: {
-                query: {}
+                query: {
+                    type: 0
+                }
             },
             validations: {
                 query: {

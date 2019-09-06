@@ -20,8 +20,14 @@ namespace Core.Api {
         }
     }
 
+    public enum QueryProcessingTypes{
+        ExecuteNoResult = 0,
+        ExecuteWithResult = 1,
+    }
+
     public class StorageQuery {
         public string Text { get; set; }
+        public QueryProcessingTypes Type { get; set; }
     }
 
 
@@ -38,28 +44,28 @@ namespace Core.Api {
         [HttpGet]
         public async Task<ActionResult<StorageState>> Get() {
             try {
-
                 return Ok(new StorageState(AppSettings.DbProvider));
             } catch (Exception ex) {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
 
-
         [HttpPost]
-        [Administrator]
+        [Authorize]
         public async Task<ActionResult<StorageState>> Post(StorageQuery query) {
             var state = new StorageState(AppSettings.DbProvider);
             try {
                 if (!ModelState.IsValid)
                     return BadRequest("Invalid data");
 
-                if(query.Text.Contains("select", StringComparison.InvariantCultureIgnoreCase)) {
-                    var res = await db.FromQuery(query.Text);
-                    state.Message = res;
-                } else {
-                    var res = await db.ExecuteRaw(query.Text);
-                    state.Message = $"{res}";
+                switch (query.Type) {
+                    case QueryProcessingTypes.ExecuteNoResult:
+                        var res = await db.ExecuteRaw(query.Text);
+                        state.Message = $"{res}";
+                        break;
+                    case QueryProcessingTypes.ExecuteWithResult:
+                        state.Message = await db.FromQuery(query.Text);
+                        break;
                 }
             } catch (Exception ex) {
                 state.Message = ex.Message;

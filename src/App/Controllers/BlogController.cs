@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
 
@@ -86,6 +87,11 @@ namespace App.Controllers {
                     $"{Url.Content("~/")}{model.Post.Cover}";
 
                 model.Blog.Title = $"{model.Post.Title} / {model.Blog.Title}";
+                var cleaned = Regex.Replace(model.Post.Description, "<.*?>", string.Empty).Substring(0, 200);
+                var lastSpace = cleaned.LastIndexOf(' ');
+                cleaned = cleaned.Substring(0, lastSpace);
+                model.Blog.Description = $"{cleaned} ...";
+                model.Blog.Keywords = $"{model.Post.Categories},{model.Blog.Keywords}";
 
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }

@@ -35,5 +35,6 @@ namespace Core.Data
         [Required]
         [StringLength(15)]
         public string Culture { get; set; }
+        public string Keywords { get; set; }
     }
 }
