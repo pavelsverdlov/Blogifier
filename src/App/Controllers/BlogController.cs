@@ -62,10 +62,10 @@ namespace App.Controllers {
 
             if (!string.IsNullOrEmpty(term))
             {
-                model.Blog.Title = term;
-                model.Blog.Description = "";
+                model.Blog.Title = $"{term} / {model.Blog.Title}";
                 model.PostListType = PostListType.Search;
             }
+            model.Blog.Description = "" ;
 
             model.Blog.Cover = $"{Url.Content("~/")}{model.Blog.Cover}";
 

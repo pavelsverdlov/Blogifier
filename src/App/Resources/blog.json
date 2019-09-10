@@ -1,4 +1,10 @@
 {
+  "meta-description": {
+    "Values": {
+      "en-US": "The last articles",
+      "ru-RU": "Последние публикации"
+    }
+  },
   "read-more": {
     "Values": {
       "en-US": "Read More",
@@ -94,7 +100,7 @@
       "zh-cn": "",
       "zh-tw": ""
     }
-  },
+  }
   //"dynamic-widget": {
   //  "Values": {
   //    "en-US": "Dynamic Widget",

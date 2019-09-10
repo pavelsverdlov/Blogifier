@@ -1,14 +1,23 @@
-﻿<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="@Model.Blog.Description">
-<meta http-equiv="description" content="@Model.Blog.Description">
-<meta http-equiv="keywords" content="@Model.Blog.Keywords">
-<meta name="keywords" content="@Model.Blog.Keywords" />
-<meta name="application-name" content="@Model.Blog.Title"/>
+﻿@using Microsoft.AspNetCore.Mvc.Localization;
+@inject IViewLocalizer Localizer
 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+@if (string.IsNullOrWhiteSpace(Model.Blog.Description)) {
+    <meta name="description" content="@Localizer["meta-description"]">
+    <meta http-equiv="description" content="@Localizer["meta-description"]">
+} else {
+    <meta name="description" content="@Model.Blog.Description">
+    <meta http-equiv="description" content="@Model.Blog.Description">
+}
+@if (!string.IsNullOrWhiteSpace(Model.Blog.Keywords)) {
+    <meta http-equiv="keywords" content="@Model.Blog.Keywords">
+    <meta name="keywords" content="@Model.Blog.Keywords" />
+}
+<meta name="application-name" content="@Model.Blog.Title" />
 @*
     <meta http-equiv="content-language" content="@Model.Blog.Lang" />
-    
+
     <link rel="canonical" href="~/@Model.Post.Lang/posts/@Model.Post.Slug">
     <link rel="canonical" href="http://site.com/canonical-link.html"/>
 *@
