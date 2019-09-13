@@ -1,0 +1,68 @@
+﻿@page
+@inject IViewLocalizer Localizer
+@{
+    ViewData["Title"] = Localizer["import"];
+}
+
+<div class="bf-main">
+    <partial name="~/Pages/Admin/Shared/_Taskbar.cshtml" />
+    <div id="app" class="bf-body">
+        <form>
+            <div class="bf-content bf-content-boxed bf-settings">
+                <div class="form-group">
+                    <label class="form-group-label">XML</label>
+                    <textarea type="text" class="form-control" rows="20"
+                              v-model="content.text"></textarea>
+                </div>
+            </div>
+
+            <div class="bf-content bf-content-boxed bf-settings">
+                <button type="button" class="btn btn-primary btn-main"
+                        :disabled="$v.content.$invalid" v-on:click="save($v)">
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        Vue.use(window.vuelidate.default)
+        const { required, minLength, email, sameAs } = window.validators
+
+        const app = new Vue({
+            el: "#app",
+            data: {
+                content: {
+                }
+            },
+            validations: {
+                content: {
+                    text: { required }
+                }
+            },
+            methods: {
+                load: function () {
+                    axios.get(webRoot + 'api/sitemap/')
+                        .then(response => {
+                            this.content = response.data;
+                        })
+                        .catch(function (error) { toastr.error(error); });
+                },
+                save: function (v) {
+                    axios.post(webRoot + 'api/sitemap', this.content)
+                        .then(function (response) {
+                            toastr.success('saved');
+                        })
+                        .catch(function (error) {
+                            toastr.error(error);
+                        });
+                }
+            },
+            beforeMount() {
+                this.load()
+            }
+        });
+    </script>
+}

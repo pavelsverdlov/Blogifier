@@ -15,8 +15,7 @@
 <div class="bf-sidebar d-lg-block">
     <div class="bf-settings-sidebar">
         <ul class="bf-settings-sidebar-nav">
-            @if (_isAdmin)
-            {
+            @if (_isAdmin) {
                 <li is-active-route asp-controller="settings" asp-action="index">
                     <a href="~/admin/settings">@Localizer["general"]</a>
                 </li>
@@ -24,8 +23,7 @@
             <li is-active-route asp-controller="settings" asp-action="profile">
                 <a href="~/admin/settings/profile">@Localizer["profile"]</a>
             </li>
-            @if (_isAdmin)
-            {
+            @if (_isAdmin) {
                 <li is-active-route asp-controller="settings" asp-action="theme">
                     <a href="~/admin/settings/theme">@Localizer["theme"] </a>
                 </li>
@@ -36,6 +34,12 @@
                     <a href="~/admin/settings/import">@Localizer["import"]</a>
                 </li>
             }
+            <li is-active-route asp-controller="settings" asp-action="sitemap">
+                <a href="~/admin/settings/sitemap">@Localizer["sitemap"]</a>
+            </li>
+            <li is-active-route asp-controller="settings" asp-action="storage">
+                <a href="~/admin/settings/storagetoolbox">@Localizer["storage"]</a>
+            </li>
         </ul>
     </div>
 </div>
