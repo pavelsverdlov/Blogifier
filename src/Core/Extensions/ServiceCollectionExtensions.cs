@@ -49,7 +49,8 @@ namespace Core.Extensions
         {
             try
             {
-                services.Configure<RazorViewEngineOptions>(options =>
+              //  services.Configure<MvcRazorRuntimeCompilationOptions>(
+                services.AddControllersWithViews().AddRazorRuntimeCompilation( options =>
                 {
                     foreach (var assembly in AppConfig.GetAssemblies(true))
                     {

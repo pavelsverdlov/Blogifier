@@ -50,7 +50,8 @@ namespace App
 
             if (section.GetValue<string>("DbProvider") == "SqlServer")
             {
-                AppSettings.DbOptions = options => options.UseSqlServer(section.GetValue<string>("ConnString"));
+                //AppSettings.DbOptions = options => options.UseSqlServer(section.GetValue<string>("ConnString"));
+                throw new NotSupportedException();
             }
             else if (section.GetValue<string>("DbProvider") == "MySql")
             {
@@ -135,7 +136,7 @@ namespace App
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDatabaseErrorPage();
             }
 
             app.UseHttpsRedirection();
@@ -163,10 +164,14 @@ namespace App
             AppSettings.ContentRootPath = env.ContentRootPath;
             //app.UseMvc();
 
-            app.UseMvc(routes => {
-                routes.MapRoute(
+            app.UseRouting();
+            app.UseSpa(spa => { });
+            app.UseCors(options => options.AllowAnyOrigin());
+
+            app.UseEndpoints(routes => {
+                routes.MapControllerRoute(
                     name: "default",
-                    template: "{culture}/{controller}/{action}/{id?}",
+                    pattern: "{culture}/{controller}/{action}/{id?}",
                     defaults: new {
                         culture = "en",
                         controller = "Blog",
@@ -174,9 +179,19 @@ namespace App
                     }
                 );
             });
+            //Core 2.2 app.UseMvc(routes => {
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{culture}/{controller}/{action}/{id?}",
+            //        defaults: new {
+            //            culture = "en",
+            //            controller = "Blog",
+            //            action = "Index"
+            //        }
+            //    );
+            //});
 
-            app.UseSpa(spa => { });
-            app.UseCors(options => options.AllowAnyOrigin());
+          
         }
     }
 

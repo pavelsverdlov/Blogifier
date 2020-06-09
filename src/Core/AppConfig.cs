@@ -27,8 +27,8 @@ namespace Core
                             continue;
                         }
 
-                        var product = assembly.GetCustomAttribute<AssemblyProductAttribute>().Product;
-                        if (product.StartsWith("Blogifier."))
+                        var product = assembly.GetCustomAttribute<AssemblyProductAttribute>();
+                        if (product != null && product.Product.StartsWith("Blogifier."))
                         {
                             assemblies.Add(assembly);
                         }

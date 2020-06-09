@@ -27,17 +27,17 @@
     <div class="card my-4">
         <h5 class="card-header">@Localizer["dynamic-widget"]</h5>
         <div class="card-body">
-            @await Component.InvokeAsync("HtmlBlock", new { theme = "Simple", widget = "Sidebar" })
+            @await Component.InvokeAsync(typeof(Common.Widgets.HtmlBlock), new { theme = "Simple", widget = "Sidebar" })
         </div>
     </div>
 }
 
 <div class="card my-4">
     <h5 class="card-header">@Localizer["post-list"]</h5>
-    @await Component.InvokeAsync("PostList", new { theme = "Simple", widget = "Post List" })
+    @await Component.InvokeAsync(typeof(Common.Widgets.PostList), new { theme = "Simple", widget = "Post List" })
 </div>
 
 <div class="card my-4">
     <h5 class="card-header">@Localizer["categories"]</h5>
-    @await Component.InvokeAsync("Categories", new { theme = "Simple", widget = "Categories" })
+    @await Component.InvokeAsync(typeof(Common.Widgets.Categories), new { theme = "Simple", widget = "Categories" })
 </div>

@@ -73,11 +73,11 @@ namespace App.Controllers {
         }
 
         [HttpGet("{culture}/posts/{year}/{month}/{day}/{slug}")]
-        public async Task<IActionResult> Single(string slug)
+        public async Task<IActionResult> Single(string culture, string slug)
         {
             try
             {
-                var model = await _db.BlogPosts.GetModel(slug);//TODO: add culture to get post 
+                var model = await _db.BlogPosts.GetModel(culture, slug);//TODO: add culture to get post 
                 model.Post.Content = Markdown.ToHtml(model.Post.Content);
 
                 model.Blog = await _db.CustomFields.GetBlogSettings();
@@ -86,12 +86,13 @@ namespace App.Controllers {
                     $"{Url.Content("~/")}{model.Blog.Cover}": 
                     $"{Url.Content("~/")}{model.Post.Cover}";
 
-                model.Blog.Title = $"{model.Post.Title} / {model.Blog.Title}";
+                model.Blog.Title = $"{model.Post.Title} | {model.Blog.Title}";
                 var cleaned = Regex.Replace(model.Post.Description, "<.*?>", string.Empty).Substring(0, 200);
                 var lastSpace = cleaned.LastIndexOf(' ');
                 cleaned = cleaned.Substring(0, lastSpace);
                 model.Blog.Description = $"{cleaned} ...";
                 model.Blog.Keywords = $"{model.Post.Categories},{model.Blog.Keywords}";
+                model.Blog.Canonical = $"https://www.mysite.com{this.Request.Path.Value}";
 
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }

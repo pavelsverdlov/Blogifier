@@ -1,6 +1,7 @@
 ﻿using Core.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
@@ -15,6 +16,7 @@ namespace Core.Data
         Task<IEnumerable<PostItem>> GetList(Pager pager, int author = 0, string category = "", string include = "", bool sanitize = false);
         Task<IEnumerable<PostItem>> Search(Pager pager, string term, int author = 0, string include = "", bool sanitize = false);
         Task<PostItem> GetItem(Expression<Func<BlogPost, bool>> predicate, bool sanitize = false);
+        Task<PostModel> GetModel(string lang, string slug);
         Task<PostModel> GetModel(string slug);
         Task<PostItem> SaveItem(PostItem item);
         Task SaveCover(int postId, string asset);
@@ -141,7 +143,14 @@ namespace Core.Data
             return await Task.FromResult(item);
         }
 
-        public async Task<PostModel> GetModel(string slug)
+        public async Task<PostModel> GetModel(string slug) {
+            return await _GetModel(null, slug);
+        }
+        public async Task<PostModel> GetModel(string lang, string slug) {
+            //Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(lang), "lang");
+            return await _GetModel(lang, slug);
+        }
+        Task<PostModel> _GetModel(string lang, string slug)
         {
             var model = new PostModel();
 
@@ -149,30 +158,25 @@ namespace Core.Data
                 .OrderByDescending(p => p.IsFeatured)
                 .ThenByDescending(p => p.Published).ToList();
 
-            if(all != null && all.Count > 0)
-            {
-                for (int i = 0; i < all.Count; i++)
-                {
-                    if(all[i].Slug == slug)
-                    {
-                        model.Post = PostToItem(all[i]);
+            for (int i = 0; i < all.Count; i++) {
+                var localized = string.IsNullOrEmpty(lang) ? true : string.Compare(all[i].Lang, lang, true) == 0;
+                if (all[i].Slug == slug && localized) {
+                    model.Post = PostToItem(all[i]);
 
-                        if(i > 0 && all[i - 1].Published > DateTime.MinValue)
-                        {
-                            model.Newer = PostToItem(all[i - 1]);
-                        }
-
-                        if (i + 1 < all.Count && all[i + 1].Published > DateTime.MinValue)
-                        {
-                            model.Older = PostToItem(all[i + 1]);
-                        }
-
-                        break;
+                    if (i > 0 && all[i - 1].Published > DateTime.MinValue) {
+                        model.Newer = PostToItem(all[i - 1]);
                     }
+
+                    if (i + 1 < all.Count && all[i + 1].Published > DateTime.MinValue) {
+                        model.Older = PostToItem(all[i + 1]);
+                    }
+
+                    break;
                 }
             }
 
-            return await Task.FromResult(model);
+
+            return Task.FromResult(model);
         }
 
         public async Task<PostItem> SaveItem(PostItem item)
