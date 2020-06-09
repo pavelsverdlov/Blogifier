@@ -62,7 +62,7 @@ namespace App
                 AppSettings.DbOptions = options => options.UseSqlite(section.GetValue<string>("ConnString"));
             }
 
-
+            
             services
                 .AddDbContext<AppDbContext>(AppSettings.DbOptions, ServiceLifetime.Transient); 
 
@@ -92,12 +92,11 @@ namespace App
                 options.AppendTrailingSlash = true;
             });
 
+            services.AddRazorPages();
             services.AddMvc()
             .AddViewLocalization()
-            .ConfigureApplicationPartManager(p =>
-            {
-                foreach (var assembly in AppConfig.GetAssemblies())
-                {
+            .ConfigureApplicationPartManager(p => {
+                foreach (var assembly in AppConfig.GetAssemblies()) {
                     p.ApplicationParts.Add(new AssemblyPart(assembly));
                 }
             })
@@ -107,7 +106,7 @@ namespace App
             })
             .AddApplicationPart(typeof(Core.Api.AuthorsController).GetTypeInfo().Assembly)
             .AddControllersAsServices()
-            .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddSwaggerGen(setupAction => {
                 setupAction.SwaggerDoc("spec",
@@ -149,7 +148,7 @@ namespace App
             //custom middleware
             app.UseCustomComments();
             app.UseRequestLocalization();
-            app.UseMiddleware<LocalizationMiddleware>(new SectionsToIgnoreLocalization("/admin/", "/api/", "/account/"));
+            app.UseMiddleware<LocalizationMiddleware>(new SectionsToIgnoreLocalization("/admin/", "/api/", "/account/"));//
 
             app.UseSwagger();
             app.UseSwaggerUI(setupAction =>
@@ -162,14 +161,15 @@ namespace App
 
             AppSettings.WebRootPath = env.WebRootPath;
             AppSettings.ContentRootPath = env.ContentRootPath;
-            //app.UseMvc();
 
             app.UseRouting();
+            app.UseAuthorization();
             app.UseSpa(spa => { });
             app.UseCors(options => options.AllowAnyOrigin());
 
-            app.UseEndpoints(routes => {
-                routes.MapControllerRoute(
+            app.UseEndpoints(endpoints => {
+                endpoints.MapRazorPages();
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{culture}/{controller}/{action}/{id?}",
                     defaults: new {
