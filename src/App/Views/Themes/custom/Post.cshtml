@@ -68,6 +68,7 @@
                 font-size: 16px;
                 border: solid 1px lightgray;
                 margin: 4px;
+                background: lightgray;
             }
 
             #comments-middleware-view input {
@@ -76,6 +77,7 @@
                 margin: 4px;
                 font-size: 20px;
                 width: 100%;
+                background: lightgray;
             }
 
             #comments-middleware-view h4 {
@@ -94,6 +96,7 @@
                 border-radius: 4px;
                 border: solid 1px gray;
                 padding: 8px;
+                background: lightgray;
             }
 
                 #comments-middleware-view button:hover {
@@ -147,12 +150,19 @@
         .comments-middleware-warning {
             color: #cc2222;
         }
+        pre.prettyprint {
+            width: 100%;
+        }
+
+        code .prettyprint, pre.prettyprint {
+            background-color: #232323;
+        }
     </style>
     <partial name="~/Views/Themes/custom/Shared/_Navbar.cshtml" />
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
 
-            <div class="col-md-8">
+            <div class="col-md-9">
                 <article itemprop="blogPosts" itemscope itemtype="http://schema.org/BlogPosting">
                     <!--
                        <h1 class="my-4">
@@ -163,7 +173,7 @@
                     <div class="card mb-4">
                         @*<img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">*@
                         <div class="card-body post">
-                            <header><h1 class="my-4" itemprop="headline">@Model.Post.Title</h1></header>
+                            <header><h1 class="my-5" itemprop="headline">@Model.Post.Title</h1></header>
                             <div itemprop="articleBody">
                                 @Html.Raw(Model.Post.Content)
                             </div>
@@ -178,7 +188,10 @@
                     </div>
                 </article>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+                @if (Model.Blog.TopWidgetHtml != null) {
+                  
+                }
                 <partial name="~/Views/Themes/custom/Shared/_Sidebar.cshtml" />
             </div>
 
@@ -186,7 +199,9 @@
     </div>
 
     <script src="/comments-middleware/loader.js"></script>
+
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?skin=sunburst"></script>
+
 
     <partial name="~/Views/Themes/custom/Shared/_Footer.cshtml" />
     <partial name="~/Views/Themes/custom/Shared/_i18nLocalization.cshtml" />
@@ -210,7 +225,6 @@
                 $('html').i18n();
                 waitCommentsBlock();
             });
-
         })();
     </script>
 

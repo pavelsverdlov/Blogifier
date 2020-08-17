@@ -37,5 +37,6 @@ namespace Core.Data
         public string Culture { get; set; }
         public string Keywords { get; set; }
         public string Canonical { get; set; }
+        public string TopWidgetHtml { get; set; }
     }
 }

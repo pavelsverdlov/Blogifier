@@ -199,6 +199,7 @@ namespace Core.Data
                     IsFeatured = item.Featured,
                     Published = item.Published,
                     Lang = item.Lang,
+                    //ImageTitle = item.TopWidgetHtml,
                 };
 
                 _db.BlogPosts.Add(post);
@@ -220,6 +221,7 @@ namespace Core.Data
                 post.Published = item.Published;
                 post.IsFeatured = item.Featured;
                 post.Lang = item.Lang;
+                //post.TopWidgetHtml = item.TopWidgetHtml;
 
                 await _db.SaveChangesAsync();
             }

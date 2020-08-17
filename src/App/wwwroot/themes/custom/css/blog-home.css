@@ -6,7 +6,51 @@
 
 body {
     padding-top: 54px;
+    background: #343a40;
 }
+header h1 {
+    color: whitesmoke;
+}
+h2.card-title {
+    color: whitesmoke;
+}
+.section-heading {
+    color: whitesmoke;
+}
+h4 {
+    color: whitesmoke;
+}
+mjx-container {
+    color: whitesmoke;
+}
+.card {
+    background: #282b2e;
+    color: #a9b7c6;
+}
+
+pre {
+    border: 1px solid lightcoral;
+    border-bottom-right-radius: .25rem;
+    border-bottom-left-radius: .25rem;
+}
+
+a {
+    color: #478ede;
+}
+
+.btn-primary {
+    background-color: #478ede;
+    border-color: #478ede;
+    color: #f2e4e4;
+}
+
+.side-top-block {
+    overflow: hidden;
+}
+
+    .side-top-block img {
+        margin-left: -25px;
+    }
 
 @media (min-width: 992px) {
     body {

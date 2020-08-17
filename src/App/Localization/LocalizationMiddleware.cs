@@ -50,9 +50,10 @@ namespace App.Localization {
             }
 
             if (!SupportedCultureHelper.TryGetCultureByUrlPart(culture, out var cultureinfo)) {
-                var part = context.Request.Path.HasValue ? url.TrimStart(slash) : string.Empty;
+                var part = context.Request.Path.HasValue ? string.Concat(slash, url.TrimStart(slash)) : string.Empty;
+                var query = context.Request.QueryString.HasValue ? context.Request.QueryString.Value : string.Empty;
                 var tag = SupportedCultureHelper.GetCultureTagOrDefault(CultureInfo.CurrentCulture);
-                context.Response.Redirect(string.Concat(slash, tag, slash, part));
+                context.Response.Redirect(string.Concat(slash, tag, part, query));
                 return;
             }
 

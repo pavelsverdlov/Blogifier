@@ -94,6 +94,8 @@ namespace App.Controllers {
                 model.Blog.Keywords = $"{model.Post.Categories},{model.Blog.Keywords}";
                 model.Blog.Canonical = $"https://www.mysite.com{this.Request.Path.Value}";
 
+                model.Blog.TopWidgetHtml = model.Post.TopWidgetHtml;
+
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }
             catch
