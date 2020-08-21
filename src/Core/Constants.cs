@@ -22,5 +22,7 @@
         public static string ThemeEditReturnUrl = "~/admin/settings/theme";
 
         public static string DefaultTheme = "custom";
+
+        public const string Host = "www.mysite.net";
     }
 }

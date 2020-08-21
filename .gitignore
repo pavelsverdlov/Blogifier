@@ -242,3 +242,4 @@ build/publish
 /src/App/wwwroot/robots.txt
 /src/App/wwwroot/sitemap.xml
 /src/App/wwwroot/sitemap.xml
+/src/App/Views/Shared/_GoogleAnalytics.cshtml
