@@ -42,5 +42,8 @@ namespace Core.Data
         [StringLength(2)]
         [Required]
         public string Lang { get; set; }
+
+        public string TopRightWidgetHtml { get; set; }
+        
     }
 }

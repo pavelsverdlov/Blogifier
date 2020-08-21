@@ -199,7 +199,7 @@ namespace Core.Data
                     IsFeatured = item.Featured,
                     Published = item.Published,
                     Lang = item.Lang,
-                    //ImageTitle = item.TopWidgetHtml,
+                    TopRightWidgetHtml = item.Toprightwidget,
                 };
 
                 _db.BlogPosts.Add(post);
@@ -221,7 +221,7 @@ namespace Core.Data
                 post.Published = item.Published;
                 post.IsFeatured = item.Featured;
                 post.Lang = item.Lang;
-                //post.TopWidgetHtml = item.TopWidgetHtml;
+                post.TopRightWidgetHtml = item.Toprightwidget;
 
                 await _db.SaveChangesAsync();
             }
@@ -277,6 +277,7 @@ namespace Core.Data
                 Featured = p.IsFeatured,
                 Author = _db.Authors.Single(a => a.Id == p.AuthorId),
                 Lang = p.Lang,
+                Toprightwidget = p.TopRightWidgetHtml,
             };
             if(post.Author != null)
             {

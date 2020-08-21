@@ -8,21 +8,27 @@ body {
     padding-top: 54px;
     background: #343a40;
 }
+
 header h1 {
     color: whitesmoke;
 }
+
 h2.card-title {
     color: whitesmoke;
 }
+
 .section-heading {
     color: whitesmoke;
 }
+
 h4 {
     color: whitesmoke;
 }
+
 mjx-container {
     color: whitesmoke;
 }
+
 .card {
     background: #282b2e;
     color: #a9b7c6;
@@ -44,12 +50,12 @@ a {
     color: #f2e4e4;
 }
 
-.side-top-block {
+.side-widget {
     overflow: hidden;
+    margin-bottom: 1.5rem !important;
 }
-
-    .side-top-block img {
-        margin-left: -25px;
+    .side-widget img {
+        max-width: 100%;
     }
 
 @media (min-width: 992px) {

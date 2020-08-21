@@ -150,6 +150,7 @@
         .comments-middleware-warning {
             color: #cc2222;
         }
+
         pre.prettyprint {
             width: 100%;
         }
@@ -190,8 +191,8 @@
             </div>
             <div class="col-md-3">
                 @if (Model.Blog.TopWidgetHtml != null) {
-                  
-                }
+                    @Html.Raw(Model.Blog.TopWidgetHtml)
+                }                
                 <partial name="~/Views/Themes/custom/Shared/_Sidebar.cshtml" />
             </div>
 

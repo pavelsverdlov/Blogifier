@@ -50,6 +50,7 @@
                     <div class="btn-group ml-auto d-none d-lg-flex">
                         <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="9" data-tooltip title="@Localizer["cover"]" onclick="fileManagerController.open(updatePostCoverCallback); return false;"><i class="fa fa-photo"></i></button>
                         <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="10" data-tooltip title="@Localizer["settings"]" onclick="return settings()"><i class="fa fa-cog"></i></button>
+                        <button class="btn btn-sm btn-rounded btn-icon btn-outline-light" tabindex="11" data-tooltip title="@Localizer["widgets"]" onclick="return widgets()"><i class="fa fa-puzzle-piece"></i></button>
                     </div>
 
                     <!-- Mobile Menu -->
@@ -105,6 +106,24 @@
                 </div>
             </div>
             <!-- /Modal Settingls -->
+            <!-- widgets -->
+            <div class="modal fade" id="postWidgets" tabindex="-1" role="dialog" aria-labelledby="widgetsLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="settingsLabel">@Localizer["widgets"]</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="fa fa-times"></i></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="form-group-label">@Localizer["toprightwidgets"]</label>
+                                <textarea type="text" rows="4" v-model="post.toprightwidget" class="form-control" autofocus></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </form>
@@ -120,6 +139,10 @@
             $('#postSettings').modal();
             return false;
         }
+        var widgets = function () {
+            $('#postWidgets').modal();
+            return false;
+        }
         var vm = new Vue({
             el: "#app",
             data: {
@@ -131,6 +154,7 @@
                     content: "",
                     description: "",
                     lang: "en",
+                    toprightwidgets:"",
                 }
             },
             methods: {
@@ -154,7 +178,8 @@
 
                     this.post.content = simplemde.value();
                     if (this.post.titleslug === null) {
-                        this.post.titleslug = "";
+                        toastr.error('Slug required');
+                        return false;
                     }
 
                     if (!this.post.title || this.post.title.length < 4) {

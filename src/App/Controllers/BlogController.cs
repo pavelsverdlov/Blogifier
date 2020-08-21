@@ -1,4 +1,5 @@
-﻿using Core.Data;
+﻿using Core;
+using Core.Data;
 using Core.Helpers;
 using Core.Services;
 using Markdig;
@@ -92,9 +93,9 @@ namespace App.Controllers {
                 cleaned = cleaned.Substring(0, lastSpace);
                 model.Blog.Description = $"{cleaned} ...";
                 model.Blog.Keywords = $"{model.Post.Categories},{model.Blog.Keywords}";
-                model.Blog.Canonical = $"https://www.mysite.com{this.Request.Path.Value}";
+                model.Blog.Canonical = $"https://{Constants.Host}{this.Request.Path.Value}";
 
-                model.Blog.TopWidgetHtml = model.Post.TopWidgetHtml;
+                model.Blog.TopWidgetHtml = model.Post.Toprightwidget;
 
                 return View($"~/Views/Themes/{model.Blog.Theme}/Post.cshtml", model);
             }

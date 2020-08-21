@@ -56,7 +56,7 @@ namespace Core.Data
 
         //name like that 'SlugTitle' does not support in Vue!!
         public string Slugtitle { get; set; }
-        public string TopWidgetHtml { get; set; }
+        public string Toprightwidget { get; set; }
 
         #region IEquatable
         // to be able compare two posts
