@@ -1,21 +1,30 @@
 ﻿using Core.Helpers;
+
 using Microsoft.AspNetCore.Http;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
-namespace Core.Data
-{
-    public class PostModel
-    {
+namespace Core.Data {
+    public struct CategoryLink {
+        public string LinkName;
+        public string Title;
+
+        public CategoryLink(string category) {
+            Title = category.Trim();
+            LinkName = Uri.EscapeDataString(Title.ToLower());           
+        }
+    }
+    public class PostModel {
         public BlogItem Blog { get; set; }
         public PostItem Post { get; set; }
         public PostItem Older { get; set; }
-        public PostItem Newer { get; set; }
+        public PostItem Newer { get; set; }       
     }
 
-    public class ListModel
-    {
+    public class ListModel {
         public BlogItem Blog { get; set; }
         public Author Author { get; set; } // posts by author
         public string Category { get; set; } // posts by category
@@ -26,14 +35,12 @@ namespace Core.Data
         public PostListType PostListType { get; set; }
     }
 
-    public class PageListModel
-    {
+    public class PageListModel {
         public IEnumerable<PostItem> Posts { get; set; }
         public Pager Pager { get; set; }
     }
 
-    public class PostItem : IEquatable<PostItem>
-    {
+    public class PostItem : IEquatable<PostItem> {
         public int Id { get; set; }
         [Required]
         public string Title { get; set; }
@@ -58,66 +65,60 @@ namespace Core.Data
         public string Slugtitle { get; set; }
         public string Toprightwidget { get; set; }
 
+        public IEnumerable<CategoryLink> GetCategories() {
+            var categories = Categories
+                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => new CategoryLink(x));
+            return categories;
+        }
+
         #region IEquatable
         // to be able compare two posts
         // if(post1 == post2) { ... }
-        public bool Equals(PostItem other)
-        {
+        public bool Equals(PostItem other) {
             if (Id == other.Id)
                 return true;
 
             return false;
         }
 
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() {
             return Id.GetHashCode();
         }
         #endregion
     }
 
-    public enum PostListType
-    {
+    public enum PostListType {
         Blog, Category, Author, Search
     }
 
-    public class PostListFilter
-    {
+    public class PostListFilter {
         HttpRequest _req;
 
-        public PostListFilter(HttpRequest request)
-        {
+        public PostListFilter(HttpRequest request) {
             _req = request;
         }
 
-        public string Page
-        {
-            get
-            {
+        public string Page {
+            get {
                 return string.IsNullOrEmpty(_req.Query["page"])
                     ? "" : _req.Query["page"].ToString();
             }
         }
-        public string Status
-        {
-            get
-            {
+        public string Status {
+            get {
                 return string.IsNullOrEmpty(_req.Query["status"])
                     ? "A" : _req.Query["status"].ToString();
             }
         }
-        public string Search
-        {
-            get
-            {
+        public string Search {
+            get {
                 return string.IsNullOrEmpty(_req.Query["search"])
                     ? "" : _req.Query["search"].ToString();
             }
         }
-        public string Qstring
-        {
-            get
-            {
+        public string Qstring {
+            get {
                 var q = "";
                 if (!string.IsNullOrEmpty(Status)) q += $"&status={Status}";
                 if (!string.IsNullOrEmpty(Search)) q += $"&search={Search}";
@@ -125,30 +126,25 @@ namespace Core.Data
             }
         }
 
-        public string IsChecked(string status)
-        {
+        public string IsChecked(string status) {
             return status == Status ? "checked" : "";
         }
     }
 
-    public class CategoryItem: IComparable<CategoryItem>
-    {
+    public class CategoryItem : IComparable<CategoryItem> {
         public string Category { get; set; }
         public int PostCount { get; set; }
 
-        public int CompareTo(CategoryItem other)
-        {
+        public int CompareTo(CategoryItem other) {
             return Category.CompareTo(other.Category);
         }
     }
 
-    public enum SaveStatus
-    {
+    public enum SaveStatus {
         Saving = 1, Publishing = 2, Unpublishing = 3
     }
 
-    public enum PublishedStatus
-    {
+    public enum PublishedStatus {
         All, Published, Drafts
     }
 }

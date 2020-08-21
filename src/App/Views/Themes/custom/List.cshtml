@@ -29,7 +29,11 @@
                                 <div class="card mb-4">
                                     <div class="card-body">
                                         <h2 class="card-title" itemprop="headline">@post.Title</h2>
-                                        @*<img class="card-img-top" src="@img" alt="Card image cap">*@
+                                        <h6 class="card-subtitle mb-2 text-muted">
+                                            @foreach (var cat in post.GetCategories()) {
+                                                <a href="~/@post.Lang/categories/@cat.LinkName" title="@cat.Title">@cat.Title</a><span>,</span>
+                                            }
+                                        </h6>
                                         <p class="card-text" itemprop="description">@Html.Raw(post.Description)</p>
                                         <a href="~/@post.Lang/posts/@post.Slug" class="btn btn-primary" title="@Localizer["read-more"]">@Localizer["read-more"] &rarr;</a>
                                     </div>

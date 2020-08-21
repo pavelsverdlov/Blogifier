@@ -174,7 +174,14 @@
                     <div class="card mb-4">
                         @*<img class="card-img-top" src="@Model.Blog.Cover" alt="Card image cap">*@
                         <div class="card-body post">
-                            <header><h1 class="my-5" itemprop="headline">@Model.Post.Title</h1></header>
+                            <header>
+                                <h1 class="my-5" itemprop="headline">@Model.Post.Title</h1>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    @foreach (var cat in Model.Post.GetCategories()) {
+                                        <a href="~/@Model.Post.Lang/categories/@cat.LinkName" title="@cat.Title">@cat.Title</a><span>,</span>
+                                    }
+                                </h6>
+                            </header>
                             <div itemprop="articleBody">
                                 @Html.Raw(Model.Post.Content)
                             </div>
@@ -191,8 +198,8 @@
             </div>
             <div class="col-md-3">
                 @if (Model.Blog.TopWidgetHtml != null) {
-                    @Html.Raw(Model.Blog.TopWidgetHtml)
-                }                
+                @Html.Raw(Model.Blog.TopWidgetHtml)
+                }
                 <partial name="~/Views/Themes/custom/Shared/_Sidebar.cshtml" />
             </div>
 

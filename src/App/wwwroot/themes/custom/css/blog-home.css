@@ -57,6 +57,9 @@ a {
     .side-widget img {
         max-width: 100%;
     }
+.card-subtitle * {
+    color: #6c757d !important;
+}
 
 @media (min-width: 992px) {
     body {
